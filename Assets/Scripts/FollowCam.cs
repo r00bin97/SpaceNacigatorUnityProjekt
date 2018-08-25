@@ -19,6 +19,10 @@ public class FollowCam : MonoBehaviour {
 
 	void LateUpdate(){
 
+		if (!FindTarget ()) {
+			return;
+		}
+
 		//Kamera Variante 1
 		SmoothFollow ();
 
@@ -42,5 +46,19 @@ public class FollowCam : MonoBehaviour {
 		myT.position = curPos;
 
 		myT.LookAt (target, target.up);
+	}
+
+	bool FindTarget(){
+		if (target == null) {
+			GameObject temp = GameObject.FindGameObjectWithTag ("Player");
+
+			if (temp != null) {
+				target = temp.transform;
+			}
+		}
+		if (target == null) {
+			return false;
+		}
+		return true;
 	}
 }

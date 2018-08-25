@@ -11,7 +11,6 @@ public class PlayerMovment : MonoBehaviour {
 
 	Transform myT;
 
-
 	void Awake(){
 		myT = transform;
 	}
