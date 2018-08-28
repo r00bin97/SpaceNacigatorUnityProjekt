@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickUpMissile : PlayerInput
+public class PickUpMissile : MonoBehaviour
 {
     [SerializeField] float rotationOffset = 100f;
 

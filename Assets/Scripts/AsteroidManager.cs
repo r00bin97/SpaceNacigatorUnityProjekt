@@ -73,7 +73,6 @@ public class AsteroidManager : MonoBehaviour
         asteroid.Add(temp); // Alle Asteroiden werden dieser Liste hinzugefügt
     }
 
-
     // Ein zufälligen Asteriod auswählen und mit Pickup Item ersetzen.
     void PlacePickup()
     {

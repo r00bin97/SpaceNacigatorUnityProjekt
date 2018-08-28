@@ -723,7 +723,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1980051848476662}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -63.810913, y: 5.5226398, z: 311.86023}
+  m_LocalPosition: {x: 0, y: 0, z: -1.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4768564260631380}
@@ -1272,7 +1272,7 @@ MeshCollider:
   m_GameObject: {fileID: 1980051848476662}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
@@ -2147,16 +2147,22 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1980051848476662}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a85c9a3e88e184333a559f09a999f531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useMouseInput: 1
   movementSpeed: 50
   turnSpeed: 60
   thruster:
   - {fileID: 114491458775877112}
   - {fileID: 114321628660391690}
+  pitchM: 0
+  yawM: 0
+  roll: 0
+  strafe: 0
+  throttle: 0
 --- !u!114 &114950932817230452
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2180,7 +2186,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1980051848476662}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0145ef13ea9734c3eb611d10d21ed2df, type: 3}
   m_Name: 

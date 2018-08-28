@@ -43,7 +43,7 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-        public void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (other.transform.CompareTag("Player"))
             EnteredTrigger = true;
@@ -55,7 +55,16 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
+        //Pause
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            if (Time.timeScale == 1)
+                Time.timeScale = 0;
+            else
+                Time.timeScale = 1;
+        }
 
+        //Laser
         if (Input.GetKeyDown(KeyCode.Space))
         {
             foreach (Laser l in laser)

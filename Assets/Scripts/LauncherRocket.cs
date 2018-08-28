@@ -11,7 +11,7 @@ public class LauncherRocket : LauncherManager
     {
         get
         {
-            return 1;       // 'Get' Anzahl der Magazine. Kein Magazin, muss immer 1 zurückgeben. 
+            return 1;      
         }
     }     
 
@@ -32,8 +32,9 @@ public class LauncherRocket : LauncherManager
         if (spawnedMissiles < initialMisCount)
         {
             foreach (RaketenSystem sta in stations)
-            {       
-                if (sta.Update(Time.deltaTime))    // sta.update gibt true zurück, wenn eine neue Rakete erzeugt wurde.
+            {
+                // Gibt true zurück, wenn eine neue Rakete erzeugt wurde.
+                if (sta.Update(Time.deltaTime))    
                     spawnedMissiles++;
             }
         }

@@ -10,6 +10,7 @@ public class Laser : MonoBehaviour {
 	Light laserLight;
 	LineRenderer lr;
 	bool canFire;
+
 	[SerializeField]float laserOffTime = .5f;
 	[SerializeField]float maxDistance = 300f;
 	[SerializeField] float fireDelay = 10f; //cooldown zwischen den schüssen

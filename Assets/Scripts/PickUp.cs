@@ -47,7 +47,7 @@ public class PickUp : MonoBehaviour {
     {
         Debug.Log("Player hit PickUp");
         EventManager.ScorePoints(points);
-        EventManager.onRespawnPickup();
+        EventManager.ReSpawnPickup();
         Destroy(gameObject);
 
     }

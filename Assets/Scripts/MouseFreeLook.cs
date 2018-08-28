@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine;
-
+ // Obsolete - Delete this file
 // Mouse Look test skript. Use if possible or delete if not
 
 public class MouseFreeLook : MonoBehaviour

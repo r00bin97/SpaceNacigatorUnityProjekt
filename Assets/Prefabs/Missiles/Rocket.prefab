@@ -339,7 +339,7 @@ MonoBehaviour:
   movementUpdateCycle: 0
   targetUpdateCycle: 0
   startGeschwindigkeit: 250
-  lebenszeit: 5
+  lebenszeit: 3
   antriebsZeit: 3
   beschleunigung: 15
   drehung: 45

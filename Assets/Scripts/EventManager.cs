@@ -16,8 +16,6 @@ public class EventManager : MonoBehaviour {
 	public static ScorePointsDelegate onScorePoints;
     private bool playerdeath = false;
 
-
-
     public static void StartGame(){
 		//Debug.Log ("Start mit dem SPiel");
 		if (onStartGame != null) {
@@ -27,11 +25,9 @@ public class EventManager : MonoBehaviour {
 
     public static void ReSpawnPickup()
     {
-        //Debug.Log ("Start mit dem SPiel");
+        //ToDo -> Es sollten immer alle drei Pickups der Scene eingesammt sein, bevor es einen Respawn gibt. (Kann auch anders gelöst werden). 
         if (onRespawnPickup != null)
-        {
-            onRespawnPickup();
-        }
+            onRespawnPickup();     
     }
 
     public static void TakeDamage(float percent){
@@ -41,16 +37,14 @@ public class EventManager : MonoBehaviour {
 		}
 	}
 
-
-        public static void PlayerDeath(){
+    public static void PlayerDeath(){
         
 		Debug.Log ("Player tot");
 		if (onPlayerDeath != null) {
-            onPlayerDeath ();        
+            onPlayerDeath ();
             // UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         }
 	}
-
 
     public static void ScorePoints(int score){
 		
