@@ -8,8 +8,11 @@ public class Shield : MonoBehaviour {
 	[SerializeField] int curHealth;
 	[SerializeField] float regenerationRate = 2f;
 	[SerializeField] int regenerationAmount = 1;
+    private AudioSource Source;
+    public AudioClip clip;
+    public AudioClip ammoFull;
 
-	void Start(){
+    void Start(){
 		curHealth = maxHealth;
 
 		InvokeRepeating ("Regenerate", regenerationRate, regenerationRate);
@@ -40,4 +43,19 @@ public class Shield : MonoBehaviour {
 		}
 			
 	}
+
+    void OnTriggerEnter(Collider colide)
+    {
+        if (colide.tag == "Pickup")
+        {
+            AudioSource.PlayClipAtPoint(clip, transform.position);
+        }
+
+        else if (colide.tag == "RocketPickup")
+        {
+            AudioSource.PlayClipAtPoint(ammoFull, transform.position);
+        }
+    }
+    
+
 }

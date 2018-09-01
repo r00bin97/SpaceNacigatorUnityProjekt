@@ -30,7 +30,8 @@ public class LauncherMissile : MonoBehaviour
     public float drehung = 45.0f;
 
     LauncherSFX missileEffect;
-    private Vector3 launchVelocity = Vector3.zero;
+    //Not needed anymore
+    //private Vector3 launchVelocity = Vector3.zero;
     private float abschussZeit = 0.0f;
     private float aktivierungszeit = 0.0f;
     private float geschwindigkeit = 0.0f;
@@ -106,7 +107,7 @@ public class LauncherMissile : MonoBehaviour
             abschussZeit = Time.time;            
             transform.parent = null;
             zielPunkt = newTarget;
-            launchVelocity = inheritedVelocity;
+           // launchVelocity = inheritedVelocity;
             rigidbody.isKinematic = false;
             AktivateRocket();
         }

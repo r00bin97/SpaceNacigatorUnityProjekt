@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 23343812486908474}
   - component: {fileID: 136948723953091304}
   - component: {fileID: 114665147928265482}
+  - component: {fileID: 114996267252289336}
   m_Layer: 0
   m_Name: rocket_pickup
   m_TagString: RocketPickup
@@ -67,7 +68,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1732828067385288}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -798.5586, y: 289.1917, z: 1111.7012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4072745139265560}
@@ -121,14 +122,23 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1732828067385288}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 235cef9a097151642a5a521908944683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laser: []
-  zielPunkt: {fileID: 0}
-  EnteredTrigger: 0
+  rotationOffset: 100
+--- !u!114 &114996267252289336
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1732828067385288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdc7a28b74595ad4492168bdbd5a23e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   rotationOffset: 100
 --- !u!136 &136948723953091304
 CapsuleCollider:
@@ -203,7 +213,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1681516695
+  randomSeed: 1467771393
   InitialModule:
     serializedVersion: 3
     enabled: 1

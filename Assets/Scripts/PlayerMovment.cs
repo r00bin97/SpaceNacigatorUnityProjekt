@@ -10,7 +10,7 @@ public class PlayerMovment : MonoBehaviour {
 	[SerializeField] float turnSpeed = 60f;
 	[SerializeField]Thruster[] thruster;
     Transform myT;
-
+ 
     [Range(-1, 1)]
     public float mousePitch;
     [Range(-1, 1)]
@@ -21,13 +21,33 @@ public class PlayerMovment : MonoBehaviour {
     public float seitwaerts;
 
     private ShipMovment ship;
+    FuelManager fuelSystem;
+
 
     void Awake(){
         ship = GetComponent<ShipMovment>();
         myT = transform;
     }
 
-	void Update () {
+    void Start()
+    {
+        fuelSystem = GetComponent<FuelManager>();
+    }
+
+    void Update () {
+
+        // Stoppe bewegung wenn Tank leer ist
+        if (fuelSystem.startFuel <= 0)
+        {
+            EventManager.PlayerDeath();
+            GetComponent<Explosion>().BlowUp(); // Only temporarly
+        }
+        if (Input.GetKey(KeyCode.W))
+        {
+            fuelSystem.tankVerbrauch = movementSpeed * 0.2f;
+            fuelSystem.ReduceFuel();
+        }
+
         if (useMouseInput)
         {
             seitwaerts = Input.GetAxis("Horizontal");
@@ -55,7 +75,8 @@ public class PlayerMovment : MonoBehaviour {
         mouseYaw = Mathf.Clamp(mouseYaw, -1.0f, 1.0f);
     }
 
-    void Turn(){
+    void Turn()
+    {
 		float yaw = turnSpeed * Time.deltaTime * Input.GetAxis("Horizontal"); //Nach Links oder Rechts drehen
 		float pitch = turnSpeed * Time.deltaTime * Input.GetAxis("Pitch"); //Nach Oben oder Unten Drehen
 		float roll = turnSpeed * Time.deltaTime * Input.GetAxis("Roll"); // Neigung des Schiffes
@@ -63,12 +84,12 @@ public class PlayerMovment : MonoBehaviour {
 		myT.Rotate (-pitch,yaw,roll);
 	}
 
-	void Thrust(){
-
+	void Thrust()
+    {
 		if (Input.GetAxis ("Vertical") > 0) 
 			myT.position += myT.forward * movementSpeed * Time.deltaTime * Input.GetAxis ("Vertical");
 
 			foreach (Thruster t in thruster)
 				t.Intensity (Input.GetAxis("Vertical"));
-		}
+    }
 }

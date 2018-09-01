@@ -52,9 +52,9 @@ public class Explosion : MonoBehaviour {
 	}
 
 	public void BlowUp(){
-
 		GameObject temp =  Instantiate (blowUp, transform.position, Quaternion.identity) as GameObject; //Particeleffekt getriggert
 		Destroy(temp, 3f); // Zerstört am Spielende alle Prefarbs Explosionen 
 		Destroy (gameObject); 
 	}
+
 }

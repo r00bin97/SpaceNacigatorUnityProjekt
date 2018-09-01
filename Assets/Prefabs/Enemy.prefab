@@ -24,7 +24,8 @@ GameObject:
   - component: {fileID: 96275296121793218}
   - component: {fileID: 114702877661641626}
   - component: {fileID: 114652224950324070}
-  - component: {fileID: 136147392974218418}
+  - component: {fileID: 136871897375303130}
+  - component: {fileID: 54347944935624462}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -70,7 +71,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1356620301585294}
   m_LocalRotation: {x: 0.000000081460335, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.6311483, y: 15.321276, z: -58.148766}
+  m_LocalPosition: {x: -22.842697, y: 1.9331102, z: 13.456602}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children:
   - {fileID: 4397590396800832}
@@ -118,6 +119,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1356620301585294}
   m_Mesh: {fileID: 4300000, guid: 4d44e2259d685ff48a3fc133a3fa427e, type: 3}
+--- !u!54 &54347944935624462
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1356620301585294}
+  serializedVersion: 2
+  m_Mass: 200
+  m_Drag: 2
+  m_AngularDrag: 20
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!96 &96275296121793218
 TrailRenderer:
   serializedVersion: 2
@@ -382,7 +398,7 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!136 &136147392974218418
+--- !u!136 &136871897375303130
 CapsuleCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -391,7 +407,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.014643388
-  m_Height: 0.06960068
-  m_Direction: 2
-  m_Center: {x: 0.0015054846, y: 0.00042886258, z: -0.00041407108}
+  m_Radius: 0.0298282
+  m_Height: 0.0596564
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}

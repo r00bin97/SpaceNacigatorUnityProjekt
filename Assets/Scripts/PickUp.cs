@@ -5,7 +5,8 @@ using UnityEngine;
 [DisallowMultipleComponent]
 [RequireComponent(typeof(CapsuleCollider))]
 
-public class PickUp : MonoBehaviour {
+public class PickUp : MonoBehaviour
+{
     static int points = 100;
     [SerializeField] float rotationOffset = 100f;
 
@@ -18,9 +19,8 @@ public class PickUp : MonoBehaviour {
         myT = transform;
     }
 
-
     void Start()
-    {   
+    {
         randomRotation.x = Random.Range(-rotationOffset, rotationOffset);
         randomRotation.y = Random.Range(-rotationOffset, rotationOffset);
         randomRotation.z = Random.Range(-rotationOffset, rotationOffset);
@@ -35,10 +35,18 @@ public class PickUp : MonoBehaviour {
     {
         if (col.transform.CompareTag("Player"))
         {
-            if(!gotHit)
+            if (!gotHit)
             {
                 gotHit = true;
                 PickupHit();
+            }
+        }
+        else if (col.tag == "RocketPickup")
+        {
+            if (!gotHit)
+            {
+                gotHit = true;
+                PickupRocket();
             }
         }
     }
@@ -49,6 +57,11 @@ public class PickUp : MonoBehaviour {
         EventManager.ScorePoints(points);
         EventManager.ReSpawnPickup();
         Destroy(gameObject);
+    }
 
+    public void PickupRocket()
+    {
+        Debug.Log("Player hit Rocket PickUp");
+        Destroy(gameObject);
     }
 }
