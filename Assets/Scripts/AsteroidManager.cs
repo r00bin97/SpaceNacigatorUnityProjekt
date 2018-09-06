@@ -59,7 +59,7 @@ public class AsteroidManager : MonoBehaviour
     }
 
     void InstantiateAsteroid(int x, int y, int z)
-    { // init der Ateroids    Vector3 sorgt dafür das alle Asteroids in eienr Reihe sind
+    { // init der Ateroids    Vector3 sorgt dafür das alle Asteroiden in eienr Reihe sind
 
         Asteroid temp = Instantiate(asteroidPrefab,
             new Vector3(
@@ -73,13 +73,13 @@ public class AsteroidManager : MonoBehaviour
         asteroid.Add(temp); // Alle Asteroiden werden dieser Liste hinzugefügt
     }
 
-    // Ein zufälligen Asteriod auswählen und mit Pickup Item ersetzen.
+    // Einen zufälligen Asterioden auswählen und mit Pickup Item ersetzen.
     void PlacePickup()
     {
         int rnd = Random.Range(0, asteroid.Count);
 
         Instantiate(pickupPrefab, asteroid[rnd].transform.position, Quaternion.identity);
-        Debug.Log("Destroying:" + asteroid[rnd].name);
+       // Debug.Log("Destroying:" + asteroid[rnd].name);
         Destroy(asteroid[rnd].gameObject);
         asteroid.RemoveAt(rnd);
     }

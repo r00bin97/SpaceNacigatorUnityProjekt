@@ -9,7 +9,6 @@ public class PickUp : MonoBehaviour
 {
     static int points = 100;
     [SerializeField] float rotationOffset = 100f;
-
     bool gotHit = false;
     Transform myT;
     Vector3 randomRotation;
@@ -39,6 +38,7 @@ public class PickUp : MonoBehaviour
             {
                 gotHit = true;
                 PickupHit();
+
             }
         }
         else if (col.tag == "RocketPickup")
@@ -55,7 +55,7 @@ public class PickUp : MonoBehaviour
     {
         Debug.Log("Player hit PickUp");
         EventManager.ScorePoints(points);
-        EventManager.ReSpawnPickup();
+      //  EventManager.ReSpawnPickup();
         Destroy(gameObject);
     }
 

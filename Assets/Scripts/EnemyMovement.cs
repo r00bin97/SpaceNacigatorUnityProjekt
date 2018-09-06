@@ -28,7 +28,7 @@ public class EnemyMovement : MonoBehaviour {
 	}
 
 	void SelfDestruct(){
-		Destroy (gameObject); // Zerstört alle Enemy am Spielende, damit man in der nächsten runde bei 0 Enemy anfängt
+		Destroy (gameObject); // Zerstört alle Enemies am Spielende, damit man in der nächsten runde bei 0 Enemy anfängt
 	}
 
     int life = 0;
@@ -54,7 +54,7 @@ public class EnemyMovement : MonoBehaviour {
 			return;
 		}
 		Pathfinding ();
-		//Turn ();
+		Turn ();
 		Move ();
 	}
 

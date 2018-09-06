@@ -10,6 +10,7 @@ public class PlayerInput : MonoBehaviour
     private GameObject rocketPickup;
     new Rigidbody rigidbody;
     int selectedLauncherGroup = 0;
+    private bool inPause = false;
 
     Queue<LauncherManager>[] launchers;
     LauncherManager[] allLaunchers;
@@ -25,6 +26,7 @@ public class PlayerInput : MonoBehaviour
 
     void Start()
     {
+
         allLaunchers = GetComponentsInChildren<LauncherManager>();
         rocketPickup = GameObject.FindWithTag("RocketPickup");
 
@@ -55,14 +57,7 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
-        //Pause
-        if (Input.GetKeyUp(KeyCode.Escape))
-        {
-            if (Time.timeScale == 1)
-                Time.timeScale = 0;
-            else
-                Time.timeScale = 1;
-        }
+
 
         //Laser
         if (Input.GetKeyDown(KeyCode.Space))
@@ -76,7 +71,7 @@ public class PlayerInput : MonoBehaviour
         }
 
         // Launcher wechseln.
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Fire2") && inPause == false)
         {
             selectedLauncherGroup++;
             if (selectedLauncherGroup >= 2)
@@ -86,15 +81,14 @@ public class PlayerInput : MonoBehaviour
         // Ausgewählten Launcher abfeuern
         if (selectedLauncherGroup == 1)
         {
-            if (Input.GetButton("Fire1"))
+            if (Input.GetButton("Fire1") && inPause == false)
                 FireWeapon();
         }
         else
         {
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown("Fire1") && inPause == false)
                 FireWeapon();
         }
-
         UpdateAmmoCounters();
     }
 

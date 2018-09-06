@@ -10,9 +10,10 @@ public class Explosion : MonoBehaviour {
 	[SerializeField] float laserHitModifier = 100f;
 	[SerializeField] Shield shield;
 	[SerializeField] GameObject blowUp;
+    [SerializeField] AudioClip playerExplosion;
 
     void IveBeenHit(Vector3 pos){
-		GameObject go = Instantiate (explosion, pos, Quaternion.identity, transform) as GameObject;
+        GameObject go = Instantiate (explosion, pos, Quaternion.identity, transform) as GameObject;
 		Destroy (go, 6f);
 
 		if (shield == null) {
@@ -27,11 +28,10 @@ public class Explosion : MonoBehaviour {
     {
         GameObject go = Instantiate(smoke, pos, Quaternion.identity, transform) as GameObject;
         Destroy(go, 6f);
-
     }
 
 
-    // Explosion tritt auf bei kollision mit Gegenstände
+    // Explosion tritt auf bei Kollision mit Gegenständen
     void OnCollisionEnter(Collision collision){
 		foreach (ContactPoint contact in collision.contacts) {
 			IveBeenHit (contact.point);
@@ -52,8 +52,9 @@ public class Explosion : MonoBehaviour {
 	}
 
 	public void BlowUp(){
-		GameObject temp =  Instantiate (blowUp, transform.position, Quaternion.identity) as GameObject; //Particeleffekt getriggert
-		Destroy(temp, 3f); // Zerstört am Spielende alle Prefarbs Explosionen 
+        AudioSource.PlayClipAtPoint(playerExplosion, transform.position);
+        GameObject temp =  Instantiate (blowUp, transform.position, Quaternion.identity) as GameObject; //Particeleffekt getriggert
+		Destroy(temp, 3f); // Zerstört am Spielende alle Prefabs Explosionen 
 		Destroy (gameObject); 
 	}
 

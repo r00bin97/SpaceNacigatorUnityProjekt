@@ -37,9 +37,9 @@ public class Asteroid : MonoBehaviour {
 	}
 
 	// Aseroiden gehen zur unterschiedlichen Zeiten kaputt nachdem der Spieler verloren hat
-	public void SelfDestruct(){
+	public void SelfDestruct()
+    {
 		float timer = Random.Range (0, destructionDelay);
-
 		Invoke ("GoBoom", timer);
 	}
 

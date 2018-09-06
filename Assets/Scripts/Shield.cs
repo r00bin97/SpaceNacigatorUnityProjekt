@@ -12,6 +12,8 @@ public class Shield : MonoBehaviour {
     public AudioClip clip;
     public AudioClip ammoFull;
 
+    public int pickUpCount = 0;
+
     void Start(){
 		curHealth = maxHealth;
 
@@ -49,13 +51,22 @@ public class Shield : MonoBehaviour {
         if (colide.tag == "Pickup")
         {
             AudioSource.PlayClipAtPoint(clip, transform.position);
+            pickUpCount++;
+
+            if(pickUpCount >= 3)
+            { 
+                EventManager.ReSpawnPickup();
+                Debug.Log("Respawn Pickup ");
+                pickUpCount = 0;
+            }
+
+            Debug.Log("pickupCount: " + pickUpCount);
         }
 
         else if (colide.tag == "RocketPickup")
         {
             AudioSource.PlayClipAtPoint(ammoFull, transform.position);
         }
-    }
-    
+    }  
 
 }
