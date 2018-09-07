@@ -6,11 +6,12 @@ public class PlayerInput : MonoBehaviour
 {
     [SerializeField] Laser[] laser;
     public Transform zielPunkt;
-    public bool EnteredTrigger;
+    private bool EnteredTrigger;
     private GameObject rocketPickup;
     new Rigidbody rigidbody;
     int selectedLauncherGroup = 0;
     private bool inPause = false;
+    public AudioClip laserSound;
 
     Queue<LauncherManager>[] launchers;
     LauncherManager[] allLaunchers;
@@ -58,16 +59,15 @@ public class PlayerInput : MonoBehaviour
     void Update()
     {
 
-
         //Laser
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            AudioSource.PlayClipAtPoint(laserSound, transform.position);
             foreach (Laser l in laser)
             {
                 Vector3 pos = transform.position + (transform.forward * l.Distance);
                 l.FireLaser();
             }
-
         }
 
         // Launcher wechseln.

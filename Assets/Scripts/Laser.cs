@@ -14,8 +14,6 @@ public class Laser : MonoBehaviour {
 	[SerializeField]float laserOffTime = .5f;
 	[SerializeField]float maxDistance = 300f;
 	[SerializeField] float fireDelay = 10f; //cooldown zwischen den schüssen
-    public GameObject destroyedVersion;
-    GameObject asteriodHit;
 
 
     void Awake(){
@@ -34,27 +32,20 @@ public class Laser : MonoBehaviour {
 	}
 
 	//Shooting 
-	Vector3 CastRay(){
+	Vector3 CastRay()
+    {
 		RaycastHit hit;
-
 		Vector3 fwd = transform.TransformDirection (Vector3.forward) * maxDistance;
 
 		// Objekt getroffen
 		if (Physics.Raycast (transform.position, fwd, out hit)) {
-			Debug.Log ("hit:" + hit.transform.name);
-     
-			SpawnExplosion (hit.point, hit.transform);
-
-            // Destruction of Asteriods // ToDo Fix Error
-            asteriodHit = GameObject.FindWithTag("Asteroid");
-            Instantiate(destroyedVersion, hit.transform.position, transform.rotation);
-            //Destroy(asteriodHit);
-
+            // Raycast hit schickt Message, welche von Asteroid.cs benötigt wird::.
+            hit.transform.BroadcastMessage("HitByRay");
+            SpawnExplosion (hit.point, hit.transform);
             return hit.point;
-
 		} 
 
-		Debug.Log ("Miss");
+		// Debug.Log ("Miss");
 		return transform.position + (transform.forward * maxDistance);
 			
 	}
@@ -73,9 +64,9 @@ public class Laser : MonoBehaviour {
 	public void FireLaser(){
 		Vector3 pos = CastRay ();
 		FireLaser (pos);
-	}
+    }
 
-	//Shooting von Enemys
+	//Shooting von Gegner
 	public void FireLaser(Vector3 targetPosition, Transform target = null){
 		
 		if (canFire) {
@@ -93,7 +84,6 @@ public class Laser : MonoBehaviour {
 			Invoke ("CanFire", fireDelay);
 		}
 	}
-
 
 	void TurnOffLaser(){
 		lr.enabled = false;

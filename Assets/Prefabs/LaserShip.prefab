@@ -55,7 +55,6 @@ MonoBehaviour:
   laserOffTime: 0.5
   maxDistance: 30
   fireDelay: 10
-  destroyedVersion: {fileID: 0}
 --- !u!120 &120964212376620114
 LineRenderer:
   m_ObjectHideFlags: 1

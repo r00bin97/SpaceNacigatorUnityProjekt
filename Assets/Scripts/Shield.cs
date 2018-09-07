@@ -10,17 +10,23 @@ public class Shield : MonoBehaviour {
 	[SerializeField] int regenerationAmount = 1;
     private AudioSource Source;
     public AudioClip clip;
+    public AudioClip alarmDamage;
     public AudioClip ammoFull;
+    private bool alarmPlay = false;
 
     public int pickUpCount = 0;
 
+    void Awake()
+    {
+        Source = GetComponent<AudioSource>();
+    }
+
     void Start(){
 		curHealth = maxHealth;
-
-		InvokeRepeating ("Regenerate", regenerationRate, regenerationRate);
+        InvokeRepeating ("Regenerate", regenerationRate, regenerationRate);
 	}
 
-	void Regenerate(){
+    void Regenerate(){
 		if (curHealth < maxHealth) {
 			curHealth += regenerationAmount;
 		}
@@ -29,7 +35,8 @@ public class Shield : MonoBehaviour {
 			CancelInvoke ();
 		}
 		EventManager.TakeDamage (curHealth/(float)maxHealth);
-	}
+       // Source.PlayOneShot(alarmDamage, 5f);
+    }
 
 	public void TakeDamage(int dmg = 1){
 		curHealth -= dmg;
@@ -39,7 +46,20 @@ public class Shield : MonoBehaviour {
 		}
 
 		EventManager.TakeDamage (curHealth/(float)maxHealth);
-		if (curHealth < 1) {
+
+        // Play Alarm
+        if (curHealth < maxHealth-2 && alarmPlay == false)
+        {
+            Source.PlayOneShot(alarmDamage, 0.7f);
+            alarmPlay = true;
+        }
+        if (curHealth >= maxHealth-1)
+        {
+            alarmPlay = false;
+        }
+
+        // Destroy Player Ship
+        if (curHealth < 1) {
 			EventManager.PlayerDeath ();
 			GetComponent<Explosion> ().BlowUp ();
 		}

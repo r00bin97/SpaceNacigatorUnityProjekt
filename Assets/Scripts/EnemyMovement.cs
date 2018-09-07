@@ -13,6 +13,7 @@ public class EnemyMovement : MonoBehaviour {
 	[SerializeField] float movementSpeed = 10f;
 	[SerializeField] float rayCastOffset = 2.5f;
 	[SerializeField] float detectionDistance = 20f;
+    [SerializeField] GameObject LaserHitEffect;
     [SerializeField] GameObject blowUpEffect;
     [SerializeField] GameObject AmmoDrop;
 
@@ -31,26 +32,38 @@ public class EnemyMovement : MonoBehaviour {
 		Destroy (gameObject); // Zerstört alle Enemies am Spielende, damit man in der nächsten runde bei 0 Enemy anfängt
 	}
 
-    int life = 0;
+    private int life = 600;
     void OnCollisionEnter(Collision health)
     {
-
         if (health.gameObject.tag == "launcher")
-        {
-            life += 50;
-            if (life == 50)
-                Destroy(gameObject);
-           
-            GameObject explosionSFX = Instantiate(blowUpEffect, transform.position, Quaternion.identity) as GameObject; //Particeleffekt getriggert
-            GameObject itemDrop = Instantiate(AmmoDrop, transform.position, Quaternion.identity) as GameObject; //Ammo gedropped
-            Destroy(explosionSFX, 2f);
-            EventManager.ScorePoints(200);
-        }
+            life -= 600;                  
+    }
+
+    void HitByRay()
+    {
+        life -= 150; // Jeder(!) Hit verursacht *3 Schaden ~ -450 pro Treffer.
+        GameObject laserSFX = Instantiate(LaserHitEffect, transform.position, Quaternion.identity) as GameObject;
+        Destroy(laserSFX, 1f);
+        Debug.Log("Enemy Life = " + life);
+    }
+
+    void Kill()
+    {
+        GameObject explosionSFX = Instantiate(blowUpEffect, transform.position, Quaternion.identity) as GameObject; //Particeleffekt getriggert
+        GameObject itemDrop = Instantiate(AmmoDrop, transform.position, Quaternion.identity) as GameObject; //Ammo gedropped
+        Destroy(explosionSFX, 2f);
+        EventManager.ScorePoints(200);
     }
 
     void Update(){
 
-		if (!FindTarget ()) {
+        if (life <= 0)
+        {
+            Destroy(gameObject);
+            Kill();
+        }
+
+        if (!FindTarget ()) {
 			return;
 		}
 		Pathfinding ();

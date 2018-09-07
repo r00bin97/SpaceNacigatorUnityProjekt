@@ -51,6 +51,11 @@ public class PickUp : MonoBehaviour
         }
     }
 
+    void HitByRay()
+    {
+        Debug.Log("PickUp hit by Laser Ray");
+    }
+
     public void PickupHit()
     {
         Debug.Log("Player hit PickUp");
