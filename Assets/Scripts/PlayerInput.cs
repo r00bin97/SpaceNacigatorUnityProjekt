@@ -12,6 +12,7 @@ public class PlayerInput : MonoBehaviour
     int selectedLauncherGroup = 0;
     private bool inPause = false;
     public AudioClip laserSound;
+    public AudioClip switchWeapon;
 
     Queue<LauncherManager>[] launchers;
     LauncherManager[] allLaunchers;
@@ -58,7 +59,6 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
-
         //Laser
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -73,6 +73,7 @@ public class PlayerInput : MonoBehaviour
         // Launcher wechseln.
         if (Input.GetButtonDown("Fire2") && inPause == false)
         {
+            AudioSource.PlayClipAtPoint(switchWeapon, transform.position);
             selectedLauncherGroup++;
             if (selectedLauncherGroup >= 2)
                 selectedLauncherGroup = 0;

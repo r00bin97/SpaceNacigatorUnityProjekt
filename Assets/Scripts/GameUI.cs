@@ -12,6 +12,7 @@ public class GameUI : MonoBehaviour {
 	[SerializeField] GameObject playerStartPosition;
 
     private bool inSpiel = false;
+    private bool playerDead = false;
 
     void Start(){
 		DelayMainMenuDisplay ();
@@ -36,22 +37,26 @@ public class GameUI : MonoBehaviour {
 		mainMenu.SetActive (true);
 		gameUI.SetActive (false);
         gameHud.SetActive(false);
+        Cursor.visible = true;
+        playerDead = true;
     }
 
 	void ShowGameUI(){
 		mainMenu.SetActive (false);
 		gameUI.SetActive (true);
         gameHud.SetActive(true);
+        Cursor.visible = false;
+        playerDead = false;
 
         // nach dem klicken auf dem Play Button wird das Raumschiff erzeugt
-        Instantiate (playerPrefab, playerStartPosition.transform.position, playerStartPosition.transform.rotation);
+        Instantiate(playerPrefab, playerStartPosition.transform.position, playerStartPosition.transform.rotation);
     }
 
 
     void Update()
     {
         {
-            if (Input.GetKeyDown(KeyCode.Escape) && inSpiel == false)
+            if (Input.GetKeyDown(KeyCode.Escape) && inSpiel == false && playerDead == false)
             {
                 // Halte Zeit an, zeige Menü, verstecke Fadenkreuz sowie Spielcursor und zeige Mauscursor. 
                 Time.timeScale = 0;
@@ -60,13 +65,17 @@ public class GameUI : MonoBehaviour {
                 Cursor.visible = true;
                 inSpiel = true;
             }
-            else if (Input.GetKeyDown(KeyCode.Escape))
+            else if (Input.GetKeyDown(KeyCode.Escape) && playerDead == false)
             {
                 Time.timeScale = 1;
                 pauseMenu.SetActive(false);
                 gameHud.SetActive(true);
                 Cursor.visible = false;
                 inSpiel = false;
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape) && playerDead == true)
+            {
+                return;
             }
         }
     }

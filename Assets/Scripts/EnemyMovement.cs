@@ -16,7 +16,8 @@ public class EnemyMovement : MonoBehaviour {
     [SerializeField] GameObject LaserHitEffect;
     [SerializeField] GameObject blowUpEffect;
     [SerializeField] GameObject AmmoDrop;
-
+    public AudioClip hitByLaserSound;
+    public AudioClip explosionSound;
 
     void OnEnable(){
 		EventManager.onPlayerDeath += FindMainCamera;
@@ -39,24 +40,24 @@ public class EnemyMovement : MonoBehaviour {
             life -= 600;                  
     }
 
-    void HitByRay()
-    {
+    void HitByRay(){
         life -= 150; // Jeder(!) Hit verursacht *3 Schaden ~ -450 pro Treffer.
         GameObject laserSFX = Instantiate(LaserHitEffect, transform.position, Quaternion.identity) as GameObject;
         Destroy(laserSFX, 1f);
         Debug.Log("Enemy Life = " + life);
+        AudioSource.PlayClipAtPoint(hitByLaserSound, transform.position);
     }
 
-    void Kill()
-    {
+    //Gegner töten;
+    void Kill(){
         GameObject explosionSFX = Instantiate(blowUpEffect, transform.position, Quaternion.identity) as GameObject; //Particeleffekt getriggert
         GameObject itemDrop = Instantiate(AmmoDrop, transform.position, Quaternion.identity) as GameObject; //Ammo gedropped
+        AudioSource.PlayClipAtPoint(explosionSound, transform.position);
         Destroy(explosionSFX, 2f);
         EventManager.ScorePoints(200);
     }
 
     void Update(){
-
         if (life <= 0)
         {
             Destroy(gameObject);

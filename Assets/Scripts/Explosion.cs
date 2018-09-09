@@ -14,7 +14,7 @@ public class Explosion : MonoBehaviour {
 
     void IveBeenHit(Vector3 pos){
         GameObject go = Instantiate (explosion, pos, Quaternion.identity, transform) as GameObject;
-		Destroy (go, 6f);
+		Destroy (go, 8f);
 
 		if (shield == null) {
 			return;
@@ -27,7 +27,7 @@ public class Explosion : MonoBehaviour {
     void SmokeAdd(Vector3 pos)
     {
         GameObject go = Instantiate(smoke, pos, Quaternion.identity, transform) as GameObject;
-        Destroy(go, 6f);
+        Destroy(go, 7f);
     }
 
 

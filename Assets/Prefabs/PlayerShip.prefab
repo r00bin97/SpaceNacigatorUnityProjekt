@@ -3707,6 +3707,8 @@ MonoBehaviour:
   regenerationAmount: 1
   clip: {fileID: 0}
   alarmDamage: {fileID: 0}
+  takeDamage: {fileID: 0}
+  playerHit: {fileID: 0}
   ammoFull: {fileID: 0}
   pickUpCount: 0
 --- !u!114 &114143486230838130
@@ -4042,6 +4044,8 @@ MonoBehaviour:
   regenerationAmount: 1
   clip: {fileID: 8300000, guid: efd319bfa7a430f4fb32cc4d381210b7, type: 3}
   alarmDamage: {fileID: 8300000, guid: 6c9737c6c565bb34bb7935daf53e3424, type: 3}
+  takeDamage: {fileID: 8300000, guid: b26aaf55d8b9fcf4a9b2e55208976f69, type: 3}
+  playerHit: {fileID: 8300000, guid: 0dec3cbe2a32a0549856404fedb7a20d, type: 3}
   ammoFull: {fileID: 8300000, guid: cb1f35ca4fa084b4bb9bd67cb3b34f6c, type: 3}
   pickUpCount: 0
 --- !u!114 &114910785706140618
@@ -4102,6 +4106,7 @@ MonoBehaviour:
   - {fileID: 114780134845892422}
   zielPunkt: {fileID: 0}
   laserSound: {fileID: 8300000, guid: 6acfd70a61699d94d94bb0da075ac29c, type: 3}
+  switchWeapon: {fileID: 8300000, guid: 849ef05b6db1ae446bfedd9f17742307, type: 3}
 --- !u!120 &120176962864438724
 LineRenderer:
   m_ObjectHideFlags: 1

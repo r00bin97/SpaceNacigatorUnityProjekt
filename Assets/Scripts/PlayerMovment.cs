@@ -42,12 +42,39 @@ public class PlayerMovment : MonoBehaviour {
             EventManager.PlayerDeath();
             GetComponent<Explosion>().BlowUp(); // Only temporarly
         }
+
+        // Verbraucht Tank bei Tastendruck W
         if (Input.GetKey(KeyCode.W))
         {
             fuelSystem.tankVerbrauch = movementSpeed * 0.2f;
             fuelSystem.ReduceFuel();
         }
 
+        // Rückwärts fliegen
+        if (Input.GetKey(KeyCode.S))
+        {
+            transform.position -= transform.forward / 6;
+            fuelSystem.tankVerbrauch = movementSpeed * .05f;
+            fuelSystem.ReduceFuel();
+        }
+
+        // Schiff heben
+        if (Input.GetKey(KeyCode.T))
+        {
+            transform.Translate(Vector3.up * 0.15f);
+            fuelSystem.tankVerbrauch = movementSpeed * .05f;
+            fuelSystem.ReduceFuel();
+        }
+
+        // Schiff absenken
+        if (Input.GetKey(KeyCode.G))
+        {
+            transform.Translate(Vector3.down * 0.15f);
+            fuelSystem.tankVerbrauch = movementSpeed * .05f;
+            fuelSystem.ReduceFuel();
+        }
+
+        // Vorwärtsbewegung & Drehung 
         if (useMouseInput)
         {
             seitwaerts = Input.GetAxis("Horizontal");
@@ -86,6 +113,7 @@ public class PlayerMovment : MonoBehaviour {
 
 	void Thrust()
     {
+        // Hier findet die Vorwärtsbewegung statt.
 		if (Input.GetAxis ("Vertical") > 0) 
 			myT.position += myT.forward * movementSpeed * Time.deltaTime * Input.GetAxis ("Vertical");
 
