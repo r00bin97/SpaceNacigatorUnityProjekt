@@ -5,21 +5,59 @@ using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour {
     [SerializeField] GameObject mainMenu;
+    [SerializeField] GameObject menuImage;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject gameHud;
     [SerializeField] GameObject gameUI;
 	[SerializeField] GameObject playerPrefab;
-	[SerializeField] GameObject playerStartPosition;
+    [SerializeField] GameObject playerPrefab2;
+    [SerializeField] GameObject playerStartPosition;
 
+    public Button shipSelectButton;
+    public Button shipSelectButton2;
+
+    private bool newStart = false; 
     private bool inSpiel = false;
     private bool playerDead = false;
+    private bool spielerShiff2 = false;
+
 
     void Start(){
-		DelayMainMenuDisplay ();
+
+        Button btn1 = shipSelectButton.GetComponent<Button>();
+        btn1.onClick.AddListener(selectShip1);
+
+        Button btn2 = shipSelectButton2.GetComponent<Button>();
+        btn2.onClick.AddListener(selectShip2);
+
+        if (newStart == false)
+        {
+            MainMenu();
+            newStart = true;
+            DelayMainMenuDisplay();
+        }
+        else
+        {
+            DelayMainMenuDisplay();
+        }		
 	}
 
-	void OnEnable(){
-		EventManager.onStartGame += ShowGameUI; //nach einmal Drücken verschwindet der Playbutton
+    void selectShip1(){
+        spielerShiff2 = false;
+        Debug.Log("Ship2 selected!= ");
+        Debug.Log(spielerShiff2);
+        Instantiate(playerPrefab, playerStartPosition.transform.position, playerStartPosition.transform.rotation);
+    }
+
+    void selectShip2(){
+        spielerShiff2 = true;
+        Debug.Log("Ship2 selected!= ");
+        Debug.Log(spielerShiff2);
+        Instantiate(playerPrefab2, playerStartPosition.transform.position, playerStartPosition.transform.rotation);
+    }
+
+    void OnEnable(){
+		EventManager.onStartGame += ShowGameUI;
 		EventManager.onPlayerDeath += ShowMainMenu;
 	}
 
@@ -33,8 +71,14 @@ public class GameUI : MonoBehaviour {
         //   UnityEngine.SceneManagement.SceneManager.LoadScene(1);  // <-- Add IEnumerator here
     }
 
+    void MainMenu()
+    {
+        menuImage.SetActive(true);
+    }
+
+
     void DelayMainMenuDisplay(){
-		mainMenu.SetActive (true);
+        mainMenu.SetActive (true);
 		gameUI.SetActive (false);
         gameHud.SetActive(false);
         Cursor.visible = true;
@@ -42,16 +86,13 @@ public class GameUI : MonoBehaviour {
     }
 
 	void ShowGameUI(){
-		mainMenu.SetActive (false);
+        menuImage.SetActive(false);
+        mainMenu.SetActive (false);
 		gameUI.SetActive (true);
         gameHud.SetActive(true);
         Cursor.visible = false;
         playerDead = false;
-
-        // nach dem klicken auf dem Play Button wird das Raumschiff erzeugt
-        Instantiate(playerPrefab, playerStartPosition.transform.position, playerStartPosition.transform.rotation);
     }
-
 
     void Update()
     {
