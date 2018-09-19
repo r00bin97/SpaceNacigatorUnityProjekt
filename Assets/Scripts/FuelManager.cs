@@ -11,8 +11,8 @@ public class FuelManager : MonoBehaviour {
     private Slider tankSlider;
     private Text tankTxt;
 
-    // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         // Tank Obergrenze
         if (startFuel > maxFuel)
             startFuel = maxFuel;
@@ -27,19 +27,20 @@ public class FuelManager : MonoBehaviour {
         tankSlider = GameObject.FindWithTag("FuelSlider").GetComponent<Slider>();
     }
 
+    // Tankfüllung aufbrauchen und UI updaten
     public void ReduceFuel()
     {
-        // Tankfüllung aufbrauchen und UI updaten..
         startFuel -= Time.deltaTime * tankVerbrauch;
         UpdateUI();
     }
 
+    // Ausgabe auf dem Bildschirm
     void UpdateUI ()
     {
         tankSlider.value = startFuel;
-        tankTxt.text = "Fuel: " + startFuel.ToString("0");
+        tankTxt.text = "Fuel: " + startFuel.ToString("0") + "\nShield" ;
 
-        if(startFuel <=0)
+        if (startFuel <=0)
         {
             startFuel = 0;
             tankTxt.text = "Out of fuel";

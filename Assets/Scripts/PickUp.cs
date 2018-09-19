@@ -7,11 +7,27 @@ using UnityEngine;
 
 public class PickUp : MonoBehaviour
 {
-    static int points = 100;
     [SerializeField] float rotationOffset = 100f;
-    bool gotHit = false;
+
+    bool gotHit = false; // Damit ein Pickup nur einmalig eingesammelt werden kann
     Transform myT;
     Vector3 randomRotation;
+
+    void OnEnable()
+    {
+        EventManager.onPlayerDeath += SelfDestruct;
+    }
+
+    void OnDisable()
+    {
+        EventManager.onPlayerDeath -= SelfDestruct;
+    }
+
+    // Zerstört alle Pickups bei Spielertot, damit keine alten Pickups in der Scene bleiben.
+    void SelfDestruct()
+    {
+        Destroy(gameObject);
+    }
 
     void Awake()
     {
@@ -20,6 +36,7 @@ public class PickUp : MonoBehaviour
 
     void Start()
     {
+        // Starte zufällige Rotation
         randomRotation.x = Random.Range(-rotationOffset, rotationOffset);
         randomRotation.y = Random.Range(-rotationOffset, rotationOffset);
         randomRotation.z = Random.Range(-rotationOffset, rotationOffset);
@@ -30,6 +47,7 @@ public class PickUp : MonoBehaviour
         myT.Rotate(randomRotation * Time.deltaTime);
     }
 
+    // Nur Spieler soll mit Pickups interagieren können.
     void OnTriggerEnter(Collider col)
     {
         if (col.transform.CompareTag("Player"))
@@ -38,35 +56,19 @@ public class PickUp : MonoBehaviour
             {
                 gotHit = true;
                 PickupHit();
-
-            }
-        }
-        else if (col.tag == "RocketPickup")
-        {
-            if (!gotHit)
-            {
-                gotHit = true;
-                PickupRocket();
             }
         }
     }
 
-    void HitByRay()
-    {
-        Debug.Log("PickUp hit by Laser Ray");
+    void HitByRay(){
+        Debug.Log("Hit by Laser");
     }
 
+
+    // Entferne das Pickup
     public void PickupHit()
     {
-        Debug.Log("Player hit PickUp");
-        EventManager.ScorePoints(points);
-      //  EventManager.ReSpawnPickup();
-        Destroy(gameObject);
-    }
-
-    public void PickupRocket()
-    {
-        Debug.Log("Player hit Rocket PickUp");
+        Debug.Log("Remove Object");
         Destroy(gameObject);
     }
 }

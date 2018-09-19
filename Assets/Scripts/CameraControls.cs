@@ -6,6 +6,7 @@ public class CameraControls : MonoBehaviour
 {
     public GameObject camera3rd;     // 3rd Person
     public GameObject camera1st;     // 1st Person
+    public static bool cameraFirst = false;
     AudioListener camera3rdAudioListener;
     AudioListener camera1stAudioListener;
 
@@ -33,7 +34,7 @@ public class CameraControls : MonoBehaviour
     //Change Camera Keyboard
     void switchCamera()
     {
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) && GameUI.inSpiel == false)
             cameraChangeCounter();
     }
 
@@ -65,11 +66,12 @@ public class CameraControls : MonoBehaviour
             GameObject.Find("CockpitPanel").GetComponent<Renderer>().enabled = false;
             GameObject.Find("CockpitPanel_R").GetComponent<Renderer>().enabled = false;
             GameObject.Find("CockpitPanel3").GetComponent<Renderer>().enabled = false;
-
+          
             camera3rd.SetActive(true);
             camera3rdAudioListener.enabled = true;
-            camera1stAudioListener.enabled = false;
+            camera1stAudioListener.enabled = false;           
             camera1st.SetActive(false);
+            cameraFirst = false;
         }
 
         if (camPosition == 1) // 1st Person
@@ -83,9 +85,11 @@ public class CameraControls : MonoBehaviour
             GameObject.Find("CockpitPanel3").GetComponent<Renderer>().enabled = true;
             GameObject.Find("PlayerShip1").GetComponent<Renderer>().enabled = false;
 
+
             camera1st.SetActive(true);
             camera1stAudioListener.enabled = true;
             camera3rdAudioListener.enabled = false;
+            cameraFirst = true;
             camera3rd.SetActive(false);
         }
 

@@ -12,9 +12,9 @@ public class SoundManagerScript : MonoBehaviour {
         lasersound = Resources.Load < AudioClip > ("laser");
         shootandExplosion = Resources.Load<AudioClip>("shootandexplosion");
         galaxyhintergrund = Resources.Load<AudioClip>("galaxyhintergrund3spiel");
-        raketa = Resources.Load<AudioClip>("raketa");
+        raketa = Resources.Load<AudioClip>("raketa"); 
 
-        audioSrc = GetComponent<AudioSource>();
+         audioSrc = GetComponent<AudioSource>();
     }
 	
 	// Update is called once per frame

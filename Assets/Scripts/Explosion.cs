@@ -49,7 +49,8 @@ public class Explosion : MonoBehaviour {
 		Vector3 forceVector = (hitSource.position - hitPosition).normalized;
 		Debug.Log (forceVector * laserHitModifier);
 		rigidBody.AddForceAtPosition (forceVector.normalized * laserHitModifier, hitPosition, ForceMode.Impulse);
-	}
+    }
+
 
 	public void BlowUp(){
         AudioSource.PlayClipAtPoint(playerExplosion, transform.position);

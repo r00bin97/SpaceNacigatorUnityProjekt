@@ -9,6 +9,22 @@ TagManager:
   - Pickup
   - launcher
   - RocketPickup
+  - MenuCamera
+  - FollowThis
+  - MenuKamera
+  - FuelSlider
+  - FuelText
+  - FirstPersonCam
+  - Laser
+  - MainMenu
+  - PickupHandp
+  - TargetGui
+  - 3rdPersonCam
+  - AmmoGui
+  - Handplaced
+  - AmmoTrackingGui
+  - Enemy1
+  - EnemyTarget
   layers:
   - Default
   - TransparentFX

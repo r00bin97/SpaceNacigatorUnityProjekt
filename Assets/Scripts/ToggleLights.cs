@@ -8,25 +8,27 @@ public class ToggleLights : MonoBehaviour {
     public AudioClip lightOff;
     private bool lightON = false;
 
-    // Hohle Script als GameObject, Parent Objekt muss ausgewählt werden.
+    // Hohle Script als GameObject, Parent Objekt muss ausgewählt werden (in Editor).
     public GameObject lightShaftScript; 
 
-    // Use this for initialization
-    void Start () {
+
+    void Start ()
+    {
         this.GetComponent<Light>().enabled = false;
         lightShaftScript.GetComponent<LightShafts>().enabled = false;
     }
 	
 	// Update is called once per frame
-	void Update () {
-        if (Input.GetKeyDown(KeyCode.B) && lightON == false)
+	void Update ()
+    {
+        if (Input.GetKeyDown(KeyCode.B) && lightON == false && GameUI.inSpiel == false)
         {           
             this.GetComponent<Light>().enabled = true;
             lightShaftScript.GetComponent<LightShafts>().enabled = true;
             AudioSource.PlayClipAtPoint(lightOn, transform.position);
             lightON = true;
         }
-        else if (Input.GetKeyDown(KeyCode.B))
+        else if (Input.GetKeyDown(KeyCode.B) && GameUI.inSpiel == false)
         {           
             this.GetComponent<Light>().enabled = false;
             lightShaftScript.GetComponent<LightShafts>().enabled = false;

@@ -14,7 +14,6 @@ public class EventManager : MonoBehaviour {
 
 	public delegate void ScorePointsDelegate(int amt);
 	public static ScorePointsDelegate onScorePoints;
-    private bool playerdeath = false;
 
     public static void StartGame(){
 		//Debug.Log ("Start mit dem SPiel");

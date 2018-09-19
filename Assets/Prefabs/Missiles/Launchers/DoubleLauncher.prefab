@@ -283,13 +283,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1eae25a54260274ba7300975c91efb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ownShip: {fileID: 0}
+  missilePrefabToLaunch: {fileID: 0}
+  missileCount: 1
+  fireDelay: 6
   launchPoints:
   - {fileID: 4307852968069026}
   - {fileID: 4433491136200588}
-  rocketPrefab: {fileID: 0}
-  spielerSchiff: {fileID: 0}
-  raketenAnzahl: 1
-  "verz\xF6gerung": 6
   mixerGroup: {fileID: 0}
   fireClip: {fileID: 8300000, guid: fd52e41386b1b03499bdcf688cb660bf, type: 3}
   fireVolume: 1

@@ -117,16 +117,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec935f11d6d5af4f85c7ef8dcc1f023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zielPunkt: {fileID: 0}
-  spielerSchiff: {fileID: 0}
+  target: {fileID: 0}
+  ownShip: {fileID: 0}
   attachPoint: {fileID: 497302}
-  movementUpdateCycle: 0
-  targetUpdateCycle: 0
-  startGeschwindigkeit: 150
-  lebenszeit: 6
+  suchKegel: 65
+  suchReichweite: 5000
+  startGeschwindigkeit: 40
   antriebsZeit: 3
-  beschleunigung: 15
+  beschleunigung: 20
   drehung: 45
+  lebenszeit: 7
 --- !u!114 &11453330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -138,13 +138,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dfb4573a6f9c0b479845cc5a2d91d76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trailPos: {fileID: 0}
+  trailFxPoint: {fileID: 0}
   trailPrefab: {fileID: 0}
   particleTrailPrefab: {fileID: 19849268, guid: 7ceb5b5561666c8448c6bec4a08bdb8c,
     type: 2}
   explosionFXPrefab: {fileID: 19876098, guid: 3972534d344f3684697472572a92ed84, type: 2}
   mixerGroup: {fileID: 0}
-  fireClip: {fileID: 8300000, guid: 4d30928c7d4bb914c9c5bfa81400b956, type: 3}
+  fireClip: {fileID: 8300000, guid: 87444d04163f42e43b027b5536bd85ca, type: 3}
   fireVolume: 0.5
   fireMinDistance: 25
   fireMaxDistance: 500
@@ -152,8 +152,8 @@ MonoBehaviour:
   loopVolume: 0.5
   loopMinDistance: 25
   loopMaxDistance: 500
-  trailAlwaysActive: 1
-  SelfDestruct: 1
+  trailAlwaysOn: 1
+  playExplosionOnSelfDestruct: 1
 --- !u!136 &13605952
 CapsuleCollider:
   m_ObjectHideFlags: 1

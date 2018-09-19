@@ -1,36 +1,30 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿// Skript für Raketen selber
 
-public enum UpdateType
-{
-    FixedUpdate,
-    Update
-}
+using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(LauncherSFX))]
-
 public class LauncherMissile : MonoBehaviour
 {
+    new Transform transform;
     new Rigidbody rigidbody;
     new CapsuleCollider collider;
-    new Transform transform;
-    
-    public Transform zielPunkt;
+
+    public Transform target;
     public Transform spielerSchiff;
     public Transform attachPoint;
-    public UpdateType movementUpdateCycle = UpdateType.Update;
-    public UpdateType targetUpdateCycle = UpdateType.Update;
 
+    public float suchKegel = 45.0f; // Nur Ziele, welche sich innerhalb des Kegels befinden werden verfolgt 
+    public float suchReichweite = 5000.0f; // Reichweite des SuchKegels
     public float startGeschwindigkeit = 0.0f;
-    public float lebenszeit = 15.0f;
     public float antriebsZeit = 3.0f;
     public float beschleunigung = 15.0f;
     public float drehung = 45.0f;
+    public float lebenszeit = 15.0f;
 
-    LauncherSFX missileEffect;
-    //Not needed anymore
+    LauncherSFX missileSFX;
     //private Vector3 launchVelocity = Vector3.zero;
     private float abschussZeit = 0.0f;
     private float aktivierungszeit = 0.0f;
@@ -38,24 +32,18 @@ public class LauncherMissile : MonoBehaviour
     private bool abgefeuert = false;
     private bool imFlug = false;
     private bool antrieb = false;
+    private bool zielErfasst = true;
+    private Quaternion guidedRotation;
 
-    private const float MINIMUM_GUIDE_SPEED = 1.0f;    // Verhindert das Marker kleiner Raketen zu groß werden. 
-
-
-    public bool AntriebAktiv
-    {
-        get
-        {
-            return antrieb;
-        }
-    }
+    public bool MissileLaunched { get { return abgefeuert; } }
+    public bool AntriebAktiv { get { return antrieb; } }
 
     private void Awake()
     {
         transform = GetComponent<Transform>();
         rigidbody = GetComponent<Rigidbody>();
         collider = GetComponent<CapsuleCollider>();
-        missileEffect = GetComponent<LauncherSFX>();
+        missileSFX = GetComponent<LauncherSFX>();
     }
 
     private void Start()
@@ -72,54 +60,51 @@ public class LauncherMissile : MonoBehaviour
             rigidbody.isKinematic = true;
     }
 
-    private void Update()
-    {
-        if (movementUpdateCycle == UpdateType.Update)
-            Abschusssequenz();
-    }
 
     private void FixedUpdate()
     {
-        if (movementUpdateCycle == UpdateType.FixedUpdate)
-            Abschusssequenz();
+        // Starte Zielverfolgung, wenn ein Ziel gegeben ist.
+        if (imFlug && target != null)
+            MissileGuidance();
+
+        Abschusssequenz();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (abgefeuert && TimeSince(abschussZeit) > 0)    // Verhindert frühzeitige Explosion
-        {
+        // Verhindert frühzeitige Explosion
+        if (abgefeuert && TimeSince(abschussZeit) > 0)    
             DestroyMissile(true);
-         }
     }
 
     // Rakete Abfeuern
-    public void Abfeuern(Transform newTarget)
+    public void Launch(Transform newTarget)
     {
-        Abfeuern(newTarget, Vector3.zero);
+        Launch(newTarget, Vector3.zero);
     }
 
-    // Rakete Abfeuern 
-    public void Abfeuern(Transform newTarget, Vector3 inheritedVelocity)
+    // Rakete Abfeuern
+    public void Launch(Transform newTarget, Vector3 inheritedVelocity)
     {
         if (!abgefeuert)
         {
             abgefeuert = true;
-            abschussZeit = Time.time;            
+            abschussZeit = Time.time;
             transform.parent = null;
-            zielPunkt = newTarget;
-           // launchVelocity = inheritedVelocity;
+            target = newTarget;
             rigidbody.isKinematic = false;
-            AktivateRocket();
+            ActivateMissile();
         }
     }
 
+    // Abschusssequenz
     private void Abschusssequenz()
     {
         if (abgefeuert)
         {
             // Aktiviert die Rakete erst, wenn abgefeuert wurde.
-            if (!imFlug && TimeSince(abschussZeit) > 0.0f)    
-                AktivateRocket();
+            if (!imFlug && TimeSince(abschussZeit) > 0.0f)
+                ActivateMissile();
 
             if (imFlug)
             {
@@ -129,44 +114,66 @@ public class LauncherMissile : MonoBehaviour
                 else
                     antrieb = true;
 
-                if (antrieb)
+                if (antrieb == true)
                     geschwindigkeit += beschleunigung * Time.deltaTime;
 
-                // Rakete bewegen -> FixedUpdate ermöglicht zugriff auf rigidbody.velocity. 
-                if (movementUpdateCycle == UpdateType.Update)
-                    transform.Translate(transform.forward * geschwindigkeit * Time.deltaTime, Space.World);
-                else if (movementUpdateCycle == UpdateType.FixedUpdate)
+                // Rotiere und bewege in Richtung Target
+                if (zielErfasst)
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, guidedRotation, drehung * Time.deltaTime);
+
                     rigidbody.velocity = transform.forward * geschwindigkeit;
             }
 
+            // Zerstöre erst nach Ablauf der Lebenszeit
             if (TimeSince(abschussZeit) > lebenszeit)
                 DestroyMissile(false);
         }
     }
 
-    private void AktivateRocket()
+    private void MissileGuidance()
     {
-        rigidbody.useGravity = false;
-        rigidbody.velocity = Vector3.zero;
-        imFlug = true;
+        Vector3 relativePosition = target.position - transform.position;
+        float winkel = Mathf.Abs(Vector3.Angle(transform.forward.normalized, relativePosition.normalized)); // Liefert absoluten Betrag der reellen Position
+        float distance = Vector3.Distance(target.position, transform.position); // Distanz zum Ziel ermitteln
 
-        if (antriebsZeit <= 0.0f)  // Falls keine Antriebszeit angegeben, ist Antrieb immer aktiv
+        // Wenn das Ziel aus dem Sichtfeld (suchKegel) gerät, wurde der Rakete ausgewichen. Sofern die Distanz zu hoch ist, keine weitere Verfolgung.
+        if (winkel > suchKegel || distance > suchReichweite)
+            zielErfasst = false;
+        // Sofern Zielerfassung aktiv ist, wird es verfolgt
+        if (zielErfasst)
+        {
+            relativePosition = target.position - transform.position;
+            guidedRotation = Quaternion.LookRotation(relativePosition, transform.up);
+        }
+    }
+
+    // Aktiviere die Rakete
+    private void ActivateMissile()
+    {
+        rigidbody.useGravity = false;  // Kann ab jetzt etwas treffen
+        rigidbody.velocity = Vector3.zero;
+        imFlug = true; // Solange Rakete aktiv ist, 'muss' sie auch fliegen
+
+        // Falls keine Antriebszeit angegeben, ist Antrieb immer aktiv
+        if (antriebsZeit <= 0.0f)  
             antrieb = true;
 
         aktivierungszeit = Time.time;
         geschwindigkeit = startGeschwindigkeit;
     }
 
+    // Zerstöre die Rakete und starte Effekte, wenn etwas getroffn wurde
     private void DestroyMissile(bool impact)
     {
         Destroy(gameObject);
 
-        if (missileEffect.SelfDestruct)
-            missileEffect.Explode();    
+        if (missileSFX.playExplosionOnSelfDestruct)
+            missileSFX.Explode();
         else if (impact)
-            missileEffect.Explode();
+            missileSFX.Explode();
     }
 
+    // Messung des zeitlichen Abstands
     private float TimeSince(float since)
     {
         return Time.time - since;

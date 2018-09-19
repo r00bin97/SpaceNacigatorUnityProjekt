@@ -20,7 +20,7 @@ public class PlayerCamera : MonoBehaviour
     }
 
     private void Update()
-    {
+    {       
         UpdateCamera();
 
         /* // Free Camera Rotation --> 
@@ -49,13 +49,12 @@ public class PlayerCamera : MonoBehaviour
     private void UpdateCamera()
     {
         if (target != null)
-        {
-                float scroll = Input.GetAxis("Mouse ScrollWheel");
-                transform.position += this.transform.forward * scroll * zoomSpeed;
-            
+        {         
             transform.position = target.TransformPoint(startOffset);
             transform.rotation = Quaternion.Slerp(transform.rotation, target.rotation, rotateSpeed * Time.deltaTime);
         }
+       // float scroll = Input.GetAxis("Mouse ScrollWheel");
+       //  transform.position += this.transform.forward * scroll * zoomSpeed;
     }
 
 }

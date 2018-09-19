@@ -15,8 +15,7 @@ public class ThusterSoundFX : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        // Verbraucht Tank bei Tastendruck W
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) && GameUI.inSpiel == false)
         {
             audioThruster.UnPause();
         }

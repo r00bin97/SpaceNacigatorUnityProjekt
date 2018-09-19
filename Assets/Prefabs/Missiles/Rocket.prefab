@@ -333,16 +333,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec935f11d6d5af4f85c7ef8dcc1f023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zielPunkt: {fileID: 0}
-  spielerSchiff: {fileID: 0}
+  target: {fileID: 0}
+  ownShip: {fileID: 0}
   attachPoint: {fileID: 497302}
-  movementUpdateCycle: 0
-  targetUpdateCycle: 0
+  suchKegel: 0
+  suchReichweite: 0
   startGeschwindigkeit: 250
-  lebenszeit: 3
   antriebsZeit: 3
   beschleunigung: 15
   drehung: 45
+  lebenszeit: 3
 --- !u!114 &11453330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dfb4573a6f9c0b479845cc5a2d91d76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trailPos: {fileID: 0}
+  trailFxPoint: {fileID: 0}
   trailPrefab: {fileID: 0}
   particleTrailPrefab: {fileID: 19834120, guid: 79e5cbccf196da54580b4decbfdd495e,
     type: 2}
@@ -368,8 +368,8 @@ MonoBehaviour:
   loopVolume: 1
   loopMinDistance: 25
   loopMaxDistance: 500
-  trailAlwaysActive: 1
-  SelfDestruct: 1
+  trailAlwaysOn: 1
+  playExplosionOnSelfDestruct: 1
 --- !u!136 &13605952
 CapsuleCollider:
   m_ObjectHideFlags: 1

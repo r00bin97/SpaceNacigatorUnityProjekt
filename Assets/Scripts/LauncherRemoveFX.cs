@@ -5,7 +5,6 @@ public class LauncherRemoveFX : MonoBehaviour
 {
     ParticleSystem[] particles;
     public bool readyToDestroy = false;
-
     float effectStartTime = 0.0f;
 
     void OnEnable()
@@ -14,21 +13,20 @@ public class LauncherRemoveFX : MonoBehaviour
         effectStartTime = Time.time;
     }
 
-    // Update mit jedem Frame
     void Update()
     {
-        bool allParticlesCountZero = true;
-        foreach (ParticleSystem ps in particles)
+        // Entferne alle Partikel
+        bool particleVorhanden = true;
+        foreach (ParticleSystem remove in particles)
         {
-            if (ps.particleCount > 0)
+            if (remove.particleCount > 0)
             {
-                allParticlesCountZero = false;
+                particleVorhanden = false;
                 break;
             }
         }
-
-        // Verhindert dass Effekte sich selbst zerstören vor dem start
-        if (readyToDestroy && allParticlesCountZero && Time.time - effectStartTime > 1.0f)
+ 
+        if (readyToDestroy && particleVorhanden && Time.time - effectStartTime > 1.0f)
             Destroy(gameObject);
     }
 }

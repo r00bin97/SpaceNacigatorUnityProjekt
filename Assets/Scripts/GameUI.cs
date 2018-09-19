@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour {
+    public static bool inSpiel = false;
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject menuImage;
     [SerializeField] GameObject pauseMenu;
@@ -15,20 +16,30 @@ public class GameUI : MonoBehaviour {
 
     public Button shipSelectButton;
     public Button shipSelectButton2;
-
     private bool newStart = false; 
-    private bool inSpiel = false;
-    private bool playerDead = false;
+    public static bool playerDead = false;
     private bool spielerShiff2 = false;
+
+    void OnEnable()
+    {
+        EventManager.onStartGame += ShowGameUI;
+        EventManager.onPlayerDeath += ShowMainMenu;
+    }
+
+    void OnDisable()
+    {
+        EventManager.onStartGame -= ShowGameUI;
+        EventManager.onPlayerDeath -= ShowMainMenu;
+    }
 
 
     void Start(){
-
+  
         Button btn1 = shipSelectButton.GetComponent<Button>();
-        btn1.onClick.AddListener(selectShip1);
+        btn1.onClick.AddListener(SelectShip1);
 
         Button btn2 = shipSelectButton2.GetComponent<Button>();
-        btn2.onClick.AddListener(selectShip2);
+        btn2.onClick.AddListener(SelectShip2);
 
         if (newStart == false)
         {
@@ -42,33 +53,25 @@ public class GameUI : MonoBehaviour {
         }		
 	}
 
-    void selectShip1(){
+    private void Awake()
+    {
+        Time.timeScale = 1;
+        inSpiel = false;
+    }
+
+    void SelectShip1(){
         spielerShiff2 = false;
-        Debug.Log("Ship2 selected!= ");
-        Debug.Log(spielerShiff2);
         Instantiate(playerPrefab, playerStartPosition.transform.position, playerStartPosition.transform.rotation);
     }
 
-    void selectShip2(){
+    void SelectShip2(){
         spielerShiff2 = true;
-        Debug.Log("Ship2 selected!= ");
-        Debug.Log(spielerShiff2);
         Instantiate(playerPrefab2, playerStartPosition.transform.position, playerStartPosition.transform.rotation);
     }
 
-    void OnEnable(){
-		EventManager.onStartGame += ShowGameUI;
-		EventManager.onPlayerDeath += ShowMainMenu;
-	}
-
-	void OnDisable(){
-		EventManager.onStartGame -= ShowGameUI; 
-		EventManager.onPlayerDeath -= ShowMainMenu;
-	}
-
 	void ShowMainMenu(){
-		Invoke ("DelayMainMenuDisplay", Asteroid.destructionDelay * 3); // Nach dem Tod dauert er zeit bis das Menu wieder kommt
-        //   UnityEngine.SceneManagement.SceneManager.LoadScene(1);  // <-- Add IEnumerator here
+        playerDead = true;
+        Invoke ("DelayMainMenuDisplay", Asteroid.destructionDelay * 3); // Nach dem Tod dauert er zeit bis das Menu wieder kommt
     }
 
     void MainMenu()
@@ -76,13 +79,11 @@ public class GameUI : MonoBehaviour {
         menuImage.SetActive(true);
     }
 
-
     void DelayMainMenuDisplay(){
         mainMenu.SetActive (true);
 		gameUI.SetActive (false);
         gameHud.SetActive(false);
         Cursor.visible = true;
-        playerDead = true;
     }
 
 	void ShowGameUI(){
@@ -106,6 +107,7 @@ public class GameUI : MonoBehaviour {
                 Cursor.visible = true;
                 inSpiel = true;
             }
+
             else if (Input.GetKeyDown(KeyCode.Escape) && playerDead == false)
             {
                 Time.timeScale = 1;

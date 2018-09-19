@@ -11,6 +11,7 @@ public class PlayerMovment : MonoBehaviour {
 	[SerializeField]Thruster[] thruster;
     Transform myT;
  
+    // Gültigkeitsbereiche der Maussteuerung
     [Range(-1, 1)]
     public float mousePitch;
     [Range(-1, 1)]
@@ -24,7 +25,8 @@ public class PlayerMovment : MonoBehaviour {
     FuelManager fuelSystem;
 
 
-    void Awake(){
+    void Awake()
+    {
         ship = GetComponent<ShipMovment>();
         myT = transform;
     }
@@ -35,7 +37,6 @@ public class PlayerMovment : MonoBehaviour {
     }
 
     void Update () {
-
         // Stoppe bewegung wenn Tank leer ist
         if (fuelSystem.startFuel <= 0)
         {
@@ -44,14 +45,14 @@ public class PlayerMovment : MonoBehaviour {
         }
 
         // Verbraucht Tank bei Tastendruck W
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) && GameUI.inSpiel == false)
         {
             fuelSystem.tankVerbrauch = movementSpeed * 0.2f;
             fuelSystem.ReduceFuel();
         }
 
         // Rückwärts fliegen
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) && GameUI.inSpiel == false)
         {
             transform.position -= transform.forward / 6;
             fuelSystem.tankVerbrauch = movementSpeed * .05f;
@@ -59,7 +60,7 @@ public class PlayerMovment : MonoBehaviour {
         }
 
         // Schiff heben
-        if (Input.GetKey(KeyCode.T))
+        if (Input.GetKey(KeyCode.T) && GameUI.inSpiel == false)
         {
             transform.Translate(Vector3.up * 0.15f);
             fuelSystem.tankVerbrauch = movementSpeed * .05f;
@@ -67,7 +68,7 @@ public class PlayerMovment : MonoBehaviour {
         }
 
         // Schiff absenken
-        if (Input.GetKey(KeyCode.G))
+        if (Input.GetKey(KeyCode.G) && GameUI.inSpiel == false)
         {
             transform.Translate(Vector3.down * 0.15f);
             fuelSystem.tankVerbrauch = movementSpeed * .05f;
@@ -92,11 +93,13 @@ public class PlayerMovment : MonoBehaviour {
     // Maus soll sich verhalten wie ein Joystick... e.g. Ruhig, wenn sich die Maus im Zentrum des Bildschirms befindet.
     private void mouseMovment()
     {
-        // Hole Position der Maus
+        // Hole Position der Maus:
         Vector3 mousePos = Input.mousePosition;
-        // Ermittle das Zentrum des Bildschirms.
+
+        // Ermittle das Zentrum des Bildschirms:
         mousePitch = (mousePos.y - (Screen.height * 0.5f)) / (Screen.height * 0.5f);
         mouseYaw = (mousePos.x - (Screen.width * 0.5f)) / (Screen.width * 0.5f);
+
         // Gehe sicher, das Werte auch in gültigem Bereich (Bildschirm) liegen.
         mousePitch = -Mathf.Clamp(mousePitch, -1.0f, 1.0f);
         mouseYaw = Mathf.Clamp(mouseYaw, -1.0f, 1.0f);
@@ -107,13 +110,12 @@ public class PlayerMovment : MonoBehaviour {
 		float yaw = turnSpeed * Time.deltaTime * Input.GetAxis("Horizontal"); //Nach Links oder Rechts drehen
 		float pitch = turnSpeed * Time.deltaTime * Input.GetAxis("Pitch"); //Nach Oben oder Unten Drehen
 		float roll = turnSpeed * Time.deltaTime * Input.GetAxis("Roll"); // Neigung des Schiffes
-		// Tastenbelegung aller Axen wird in Unity angegeben
 		myT.Rotate (-pitch,yaw,roll);
 	}
 
-	void Thrust()
+    // Vorwärtsbewegung
+    void Thrust()
     {
-        // Hier findet die Vorwärtsbewegung statt.
 		if (Input.GetAxis ("Vertical") > 0) 
 			myT.position += myT.forward * movementSpeed * Time.deltaTime * Input.GetAxis ("Vertical");
 

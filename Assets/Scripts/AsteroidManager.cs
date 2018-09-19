@@ -9,13 +9,7 @@ public class AsteroidManager : MonoBehaviour
     [SerializeField] GameObject pickupPrefab;
     [SerializeField] int numberOfAsteroidsOnAnAxis = 10;
     [SerializeField] int gridSpacing = 100;
-
     public List<Asteroid> asteroid = new List<Asteroid>();
-
-    void Start()
-    {
-        //PlaceAsteroids ();
-    }
 
     // nach dem Klicken auf dem Play Button erschenit das Atseroiden Feld
     void OnEnable()
@@ -66,10 +60,9 @@ public class AsteroidManager : MonoBehaviour
                 transform.position.x + (x * gridSpacing) + AsteroidOffset(),
                 transform.position.y + (y * gridSpacing) + AsteroidOffset(),
                 transform.position.z + (z * gridSpacing) + AsteroidOffset()),
-            Quaternion.identity, transform) as Asteroid;
+                Quaternion.identity, transform) as Asteroid;
 
         temp.name = "Asteroid: " + x + "-" + y + "-" + z;
-
         asteroid.Add(temp); // Alle Asteroiden werden dieser Liste hinzugefügt
     }
 
@@ -77,13 +70,11 @@ public class AsteroidManager : MonoBehaviour
     void PlacePickup()
     {
         int rnd = Random.Range(0, asteroid.Count);
-
         Instantiate(pickupPrefab, asteroid[rnd].transform.position, Quaternion.identity);
        // Debug.Log("Destroying:" + asteroid[rnd].name);
         Destroy(asteroid[rnd].gameObject);
         asteroid.RemoveAt(rnd);
     }
-
 
     float AsteroidOffset()
     {

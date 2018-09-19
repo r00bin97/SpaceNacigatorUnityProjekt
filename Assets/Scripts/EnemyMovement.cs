@@ -18,19 +18,30 @@ public class EnemyMovement : MonoBehaviour {
     [SerializeField] GameObject AmmoDrop;
     public AudioClip hitByLaserSound;
     public AudioClip explosionSound;
+   
+    bool addOnlyOnce; // Damit Gegner nur einmal in die Liste kommt
+    bool inScene; // Um sicher zu sein, dass Gegner auch in Scene ist
 
     void OnEnable(){
 		EventManager.onPlayerDeath += FindMainCamera;
-		EventManager.onStartGame += SelfDestruct;
+		EventManager.onPlayerDeath += SelfDestruct;
 	}
 
 	void OnDisable(){
 		EventManager.onPlayerDeath -= FindMainCamera;
-		EventManager.onStartGame -= SelfDestruct;
+		EventManager.onPlayerDeath -= SelfDestruct;
 	}
 
-	void SelfDestruct(){
-		Destroy (gameObject); // Zerstört alle Enemies am Spielende, damit man in der nächsten runde bei 0 Enemy anfängt
+    void Start()
+    {
+        inScene = true;
+        addOnlyOnce = true;
+    }
+
+    // Zerstört alle Enemies bei Spielertot, damit es in der nächsten runde bei 0 Enemy anfängt --> Listeneintrag wird 
+    void SelfDestruct()
+    {
+        Destroy (gameObject); 
 	}
 
     private int life = 600;
@@ -40,39 +51,64 @@ public class EnemyMovement : MonoBehaviour {
             life -= 600;                  
     }
 
-    void HitByRay(){
-        life -= 150; // Jeder(!) Hit verursacht *3 Schaden ~ -450 pro Treffer.
+    void HitByRay()
+    {
+        life -= 150;
         GameObject laserSFX = Instantiate(LaserHitEffect, transform.position, Quaternion.identity) as GameObject;
         Destroy(laserSFX, 1f);
         Debug.Log("Enemy Life = " + life);
         AudioSource.PlayClipAtPoint(hitByLaserSound, transform.position);
     }
 
-    //Gegner töten;
-    void Kill(){
-        GameObject explosionSFX = Instantiate(blowUpEffect, transform.position, Quaternion.identity) as GameObject; //Particeleffekt getriggert
-        GameObject itemDrop = Instantiate(AmmoDrop, transform.position, Quaternion.identity) as GameObject; //Ammo gedropped
-        AudioSource.PlayClipAtPoint(explosionSound, transform.position);
-        Destroy(explosionSFX, 2f);
-        EventManager.ScorePoints(200);
+    //Gegner töten
+    void Kill()
+    {
+        PlayerInput.nearByEnemies.Remove(this); // Entferne Gegner von Liste
+        GameObject explosionSFX = Instantiate(blowUpEffect, transform.position, Quaternion.identity) as GameObject; // Particeleffekt getriggert
+        randomDrop(); // Randomizer aufrufen
+        AudioSource.PlayClipAtPoint(explosionSound, transform.position); // Spiele Audio ab
+        Destroy(explosionSFX, 2f); // Entferne Explosion, nach 2 Sekunden
+        EventManager.ScorePoints(200); // Spieler erhält 200 Punkte
+        Destroy(gameObject);
     }
 
-    void Update(){
-        if (life <= 0)
+    // Randomizer, denn nicht jeder Gegner soll Ammo fallen lassen
+    void randomDrop()
+    {
+        int num = Random.Range(0, 60); 
+        if (num > 35)
+            dropAmmo();
+    }
+
+    // Ammo drop
+    void dropAmmo()
+    {
+        GameObject itemDrop = Instantiate(AmmoDrop, transform.position, Quaternion.identity) as GameObject; 
+    }
+
+    void Update()
+    {
+        //Wenn ein Gegner in die Scene kommt, füge diesen einmalig zur Liste hinzu. 
+        if (inScene && addOnlyOnce)
         {
-            Destroy(gameObject);
+            addOnlyOnce = false;
+            PlayerInput.nearByEnemies.Add(this);
+        }
+
+        if (life <= 0){
             Kill();
         }
 
         if (!FindTarget ()) {
 			return;
 		}
+
 		Pathfinding ();
 		Turn ();
 		Move ();
 	}
 
-	// dreht sich zum Playship(dem Spieler)
+	// dreht sich zum Spieler
 	void Turn(){
 		Vector3 pos = target.position - transform.position;
 		Quaternion rotation = Quaternion.LookRotation (pos);
@@ -92,12 +128,6 @@ public class EnemyMovement : MonoBehaviour {
 		Vector3 right = transform.position + transform.right * rayCastOffset;
 		Vector3 up = transform.position + transform.up * rayCastOffset;
 		Vector3 down = transform.position - transform.up * rayCastOffset;
-
-		//Debuging zeigt die Sensoren / hitbox
-		Debug.DrawRay (left, transform.forward * detectionDistance, Color.cyan);
-		Debug.DrawRay (right, transform.forward * detectionDistance, Color.cyan);
-		Debug.DrawRay (up, transform.forward * detectionDistance, Color.cyan);
-		Debug.DrawRay (down, transform.forward * detectionDistance, Color.cyan);
 
 		if (Physics.Raycast (left, transform.forward, out hit, detectionDistance)) {
 			raycastOffset += Vector3.right;
@@ -119,21 +149,24 @@ public class EnemyMovement : MonoBehaviour {
 		}
 	}
 
-	bool FindTarget(){
-		if (target == null) {
+    // Findet den Spieler.
+    bool FindTarget()
+    {
+		if (target == null)
+        {
 			GameObject temp = GameObject.FindGameObjectWithTag("Player");
-
 			if (temp != null) {
 				target = temp.transform;
 			}
 		}
-		if (target == null) {
+		if (target == null)
+        {
 			return false;
 		}
 		return true;
 	}
 
-	//Wenn der Spieler tot ist bleibt die Kamera stehen
+	//Finde die aktive Kamera nach Spielertot.
 	void FindMainCamera(){
 		target = GameObject.FindGameObjectWithTag("MainCamera").transform;
 	}

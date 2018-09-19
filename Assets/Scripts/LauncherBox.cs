@@ -1,62 +1,65 @@
-﻿using UnityEngine;
+﻿// Launcher Box. Liegt auf LauncherBox Objekt.
+using UnityEngine;
 
 public class LauncherBox : LauncherManager
 {
     public float streuung = 0.0f;        // Höhere Nummer = Mehr Streuung
-    public int magazinAnzahl = 1;               // Anzahl zusätzlicher Magazine - optional
-    public float magNachladeZeit = 6.0f;     // Zeit bis Magazin nachgeladen wurde
-    int boxAnzahl = 0;
+    public int magazineCount = 1;               // Anzahl zusätzlicher Magazine - optional
+    public float nachladeZeit = 6.0f;     // Zeit bis Magazin nachgeladen wurde
+    int boxAnzahl = 0; // Anzahl der Raketen in Magazin-Box
     int startRaketen = 1;
     int startMagazine = 1;
 
     private void Start()
     {
         startRaketen = raketenAnzahl;
-        startMagazine = magazinAnzahl;
+        startMagazine = magazineCount;
     }
 
     private void Update()
     {
-        if (nachladenCooldown > 0.0f)                               // Während Cooldown
+        if (nachladeCooldown > 0.0f)                               // Während Cooldown
         {
-            nachladenCooldown -= Time.deltaTime;
-            if (nachladenCooldown <= 0.0f)
-                nachladenCooldown = 0.0f;
+            nachladeCooldown -= Time.deltaTime;
+            if (nachladeCooldown <= 0.0f)
+                nachladeCooldown = 0.0f;
         }
 
-        if (magazinAnzahl > 0 && magazinNachladenCooldown > 0.0f)  // Während Nachladen
+        if (magazineCount > 0 && magazinNachladeCooldown > 0.0f)  // Während Nachladen
         {
-            magazinNachladenCooldown -= Time.deltaTime;
-            if (magazinNachladenCooldown <= 0.0f)                  // Wenn Nachladen fertig ist.
+            magazinNachladeCooldown -= Time.deltaTime;
+
+            if (magazinNachladeCooldown <= 0.0f)                 // Wenn Nachladen fertig ist.
             {
                 raketenAnzahl = startRaketen;
-                nachladenCooldown = 0.0f;
-                magazinAnzahl--;
+                nachladeCooldown = 0.0f;
+                magazineCount--;
             }
         }
     }
 
-    public override void Abfeuern(Transform zielPunkt)                   // Rakete abfeuern. Sofern kein Target übergeben, schieße gerade.
+
+    public override void Launch(Transform target)    // Rakete abfeuern.
     {
-        Abfeuern(zielPunkt, Vector3.zero);
+        Launch(target, Vector3.zero);
     }
 
-    public override void Abfeuern(Transform zielPunkt, Vector3 velocity) // Rakete abfeuern, schieße gerade ohne Zielpunkt.
+    public override void Launch(Transform target, Vector3 velocity)    // Rakete abfeuern.
     {
-        if (raketenAnzahl > 0 && nachladenCooldown <= 0.0f && magazinNachladenCooldown <= 0.0f)
+        if (raketenAnzahl > 0 && nachladeCooldown <= 0.0f && magazinNachladeCooldown <= 0.0f)
         {
             if (fireSource != null)
                 fireSource.Play();
 
-            Vector3 deviation = UnityEngine.Random.insideUnitCircle * (streuung * Mathf.Deg2Rad);
-            deviation = launchPoints[boxAnzahl].TransformDirection(deviation);
-            Vector3 randomizedForward = launchPoints[boxAnzahl].forward + deviation;
+            Vector3 abweichung = UnityEngine.Random.insideUnitCircle * (streuung * Mathf.Deg2Rad);
+            abweichung = launchPoints[boxAnzahl].TransformDirection(abweichung);
+            Vector3 randomizedForward = launchPoints[boxAnzahl].forward + abweichung;
             Quaternion randomizedRotation = Quaternion.LookRotation(randomizedForward);
 
-            LauncherMissile rakete = ErzeugeRackete(launchPoints[boxAnzahl].position, randomizedRotation);
-            rakete.zielPunkt = zielPunkt;
-            rakete.Abfeuern(zielPunkt, velocity);
-            nachladenCooldown = verzögerung;
+            LauncherMissile missile = ErzeugeRackete(launchPoints[boxAnzahl].position, randomizedRotation);
+            missile.target = target;
+            missile.Launch(target, velocity);
+            nachladeCooldown = verzögerung;
             raketenAnzahl--;
 
             boxAnzahl++;
@@ -64,27 +67,24 @@ public class LauncherBox : LauncherManager
                 boxAnzahl = 0;
             // Reload
             if (raketenAnzahl <= 0)
-                Nachladen();
+                ReloadMagazine();
         }
     }
 
     public override void LauncherZurucksetzen()     // Setzt Launcher zurück.
     {
-        nachladenCooldown = 0.0f;
-        magazinNachladenCooldown = 0.0f;
+        nachladeCooldown = 0.0f;
+        magazinNachladeCooldown = 0.0f;
         raketenAnzahl = startRaketen;
-        magazinAnzahl = startMagazine;
+        magazineCount = startMagazine;
     }
 
-    public void Nachladen()            // Funktion für manuelles Nachladen
+    public void ReloadMagazine()            // Funktion für Nachladen
     {
-        magazinNachladenCooldown = magNachladeZeit;
+        magazinNachladeCooldown = nachladeZeit;
     }
 
-    public override int MagazinAnzahl       // 'Get' Anzahle der Magazine des Launchers. 
-    {
-        get{return magazinAnzahl; }
-    }
+    public override int MagazinAnzahl { get { return magazineCount; } }
 
     private LauncherMissile ErzeugeRackete(Vector3 position, Quaternion rotation)      // Erzeugt Missile und feuert diese ab. 
     {

@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Shield : MonoBehaviour {
 
-	[SerializeField] int maxHealth = 10;
+    [SerializeField] int maxHealth = 10;
 	[SerializeField] int curHealth;
 	[SerializeField] float regenerationRate = 2f;
 	[SerializeField] int regenerationAmount = 1;
+    static int points = 100;
     private AudioSource Source;
     public AudioClip clip;
     public AudioClip alarmDamage;
@@ -41,7 +42,8 @@ public class Shield : MonoBehaviour {
     }
 
     // Schaden abziehen
-    public void TakeDamage(int dmg = 1){
+    public void TakeDamage(int dmg = 1)
+    {
 		curHealth -= dmg;
 
 		if (curHealth <= 0)
@@ -81,6 +83,7 @@ public class Shield : MonoBehaviour {
         if (colide.tag == "Pickup")
         {
             AudioSource.PlayClipAtPoint(clip, transform.position);
+            EventManager.ScorePoints(points);
             pickUpCount++;
 
             if(pickUpCount >= 3)
@@ -95,7 +98,12 @@ public class Shield : MonoBehaviour {
 
         else if (colide.tag == "RocketPickup")
         {
-            AudioSource.PlayClipAtPoint(ammoFull, transform.position);
+            AudioSource.PlayClipAtPoint(ammoFull, transform.position);            
+        }
+        else if (colide.tag == "Handplaced")
+        {
+            AudioSource.PlayClipAtPoint(clip, transform.position);
+            EventManager.ScorePoints(points);
         }
     }  
 

@@ -7,13 +7,12 @@ public class EnemySpawner : MonoBehaviour {
 	[SerializeField] float spawnTimer = 5f;
 
 
-	// Enemy Spawnt hat aber kein Target -> Target finden in EnemyMovement
 	void Start(){
 		//StartSpawning ();
 	}
 
 	void OnEnable(){
-		EventManager.onStartGame += StartSpawning; //Spawnen begiinnt erst wenn speielr auf Play gedrückt hat
+		EventManager.onStartGame += StartSpawning; //Spawnen beginnt erst wenn speielr auf Play gedrückt hat
 		EventManager.onPlayerDeath += StopSpawning; // Wenn spieler tot ist sollen keine Weiteren Enemy Spawnen
 	}
 

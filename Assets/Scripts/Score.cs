@@ -6,11 +6,19 @@ using UnityEngine.UI;
 public class Score : MonoBehaviour {
 	[SerializeField] int score;
 	[SerializeField] int hiScore;
-	[SerializeField] Text hiScoreText;
+    [SerializeField] Text hiScoreMenu;
+    [SerializeField] Text hiScorePauseMenu;
+    [SerializeField] Text hiScoreText;
 	[SerializeField] Text scoreText;
 
+    private void Awake()
+    {
+        hiScore = PlayerPrefs.GetInt("hiScore", 0);
+        hiScoreMenu.text = hiScore.ToString() + "\n\n\n";
+    }
 
-	void OnEnable(){
+
+    void OnEnable(){
 		EventManager.onStartGame += ResetScore;
         EventManager.onStartGame += LoadHiScore;
         EventManager.onPlayerDeath += CheckNewHiScore;
@@ -51,6 +59,7 @@ public class Score : MonoBehaviour {
 	}
 
 	void DisplayHightScore(){
-		hiScoreText.text = hiScore.ToString();
-	}
+		hiScoreText.text = "Highscore: " + hiScore.ToString();
+        hiScorePauseMenu.text = hiScore.ToString() + "\n\n\n";
+    }
 }

@@ -6,17 +6,9 @@ public class ShipBehaviour : MonoBehaviour
 {
     public Vector3 lineareKraft = new Vector3(100.0f, 100.0f, 100.0f);
     public Vector3 diagonaleKraft = new Vector3(100.0f, 100.0f, 100.0f);
-//    [Range(0.0f, 1.0f)]
-//    public float gegenkraft = 1.0f;
+    //public float gegenkraft = 1.0f;      // 0.0f - 1.0f
     public float kraftverstaerker = 100.0f;
-
-    public Rigidbody Rigidbody {
-        get
-        {
-            return rbody;
-        }
-    }
-
+    public Rigidbody Rigidbody { get { return rbody; } }
     private Vector3 kraftLinear = Vector3.zero;
     private Vector3 kraftDiagonal = Vector3.zero;
     private ShipMovment ship;
@@ -30,7 +22,7 @@ public class ShipBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
-        // AddRelativeForce & AddRelativeTorque -> Kraft & Drehmoment, bereitgestellt von Rigidbody. :)
+        // Kraft & Drehmoment
         if (rbody != null)
         {
             rbody.AddRelativeForce(kraftLinear * kraftverstaerker, ForceMode.Force); 
@@ -38,7 +30,7 @@ public class ShipBehaviour : MonoBehaviour
         }
     }
 
-    // Legt fest, wieviel Kraft auf das Schiff wirkt. Diagonal & Linear.
+    // Legt fest, wieviel Kraft auf das Schiff wirkt.
     public void ShipInput(Vector3 linearInput, Vector3 diagonalInput)
     {
         kraftLinear = VecX(linearInput, lineareKraft);

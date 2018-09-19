@@ -4,15 +4,15 @@ using System.Collections.Generic;
 public abstract class LauncherManager : MonoBehaviour
 {
     new Transform transform;
-    public List<Transform> launchPoints;
-    protected float nachladenCooldown = 0.0f;
-    protected float magazinNachladenCooldown = 0.0f;
-    public LauncherMissile rocketPrefab;
     public Transform spielerSchiff;
+    public LauncherMissile rocketPrefab;
     public int raketenAnzahl = 1;
     public float verzögerung = 6.0f;
+    public List<Transform> launchPoints;
 
-    // Audio: -> ToDo: Erzeugtes Audio an entsprechende Mixer Group hängen.
+    protected float nachladeCooldown = 0.0f;
+    protected float magazinNachladeCooldown = 0.0f;
+
     public UnityEngine.Audio.AudioMixerGroup mixerGroup;
     public AudioClip fireClip;
     public float fireVolume = 1.0f;
@@ -20,10 +20,7 @@ public abstract class LauncherManager : MonoBehaviour
     public float maxDistance = 200.0f;
     protected AudioSource fireSource;
 
-    abstract public int MagazinAnzahl
-    {
-        get;
-    }
+    abstract public int MagazinAnzahl { get; }
 
     protected virtual void Awake()
     {
@@ -37,7 +34,6 @@ public abstract class LauncherManager : MonoBehaviour
                     launchPoints.Add(potentialHPs[i]);
             }
 
-            // Wenn keine Punkte gefunden wurden, erzeuge direkt an Launcher.
             if (launchPoints.Count == 0)
                 launchPoints.Add(transform);
         }
@@ -58,12 +54,9 @@ public abstract class LauncherManager : MonoBehaviour
         }
     }
 
-    // Abstrakte Methode um Launcher zurück zu setzen.
+    abstract public void Launch(Transform target);
+
+    abstract public void Launch(Transform target, Vector3 velocity);
+
     abstract public void LauncherZurucksetzen();
-
-    // Abstrakte Methode zum Abfeuern.
-    abstract public void Abfeuern(Transform zielPunkt);
-
-    // Abstrakte Methode zum Abfeuern - mit velocity.
-    abstract public void Abfeuern(Transform zielPunkt, Vector3 velocity);
 }

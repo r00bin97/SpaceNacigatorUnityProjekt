@@ -39,7 +39,6 @@ public class Asteroid : MonoBehaviour {
 
     void HitByRay()
     {
-        //Debug.Log("I was hit by Laser Ray");
         Instantiate(destroyedVersion, myT.transform.position, transform.rotation);
     }
 
