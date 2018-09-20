@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿// Entfert Rakete und Partikeleffekte nach Einschlag
+
+using UnityEngine;
 
 [DisallowMultipleComponent]
 public class LauncherRemoveFX : MonoBehaviour

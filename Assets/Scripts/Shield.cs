@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// Shield = Lebensenergie des Spielers. Beinhaltet auch PickUp interaktion.
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +10,8 @@ public class Shield : MonoBehaviour {
 	[SerializeField] int curHealth;
 	[SerializeField] float regenerationRate = 2f;
 	[SerializeField] int regenerationAmount = 1;
+
+    public UnityEngine.Audio.AudioMixerGroup mixerGroup;
     static int points = 100;
     private AudioSource Source;
     public AudioClip clip;

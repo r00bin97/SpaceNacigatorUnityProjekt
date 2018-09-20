@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// Menu - Startet das Spiel
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

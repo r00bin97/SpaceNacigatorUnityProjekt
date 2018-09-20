@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿// Manager zur Verwaltung des Raketensystems
+
+using UnityEngine;
 using System.Collections.Generic;
 
 public abstract class LauncherManager : MonoBehaviour
@@ -55,8 +57,6 @@ public abstract class LauncherManager : MonoBehaviour
     }
 
     abstract public void Launch(Transform target);
-
     abstract public void Launch(Transform target, Vector3 velocity);
-
     abstract public void LauncherZurucksetzen();
 }

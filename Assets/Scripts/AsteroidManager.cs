@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// Zuständig für Zufallsgenerierung von Asteroiden-Transformationen, sowie prozeduraler Scenen Platzierung
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

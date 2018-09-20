@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement; // <<<<<< ADD THIS.
+using UnityEngine.SceneManagement; 
 
 public class RotationMainMenu : MonoBehaviour {
     [SerializeField]
@@ -13,7 +13,5 @@ public class RotationMainMenu : MonoBehaviour {
 
         if (Input.GetMouseButton(0))
           SceneManager.LoadScene("d");
-      //  EventManager.StartGame();
-
     }
 }

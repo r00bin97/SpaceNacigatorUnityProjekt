@@ -334,7 +334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  ownShip: {fileID: 0}
+  spielerSchiff: {fileID: 0}
   attachPoint: {fileID: 497302}
   suchKegel: 0
   suchReichweite: 0
@@ -354,12 +354,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dfb4573a6f9c0b479845cc5a2d91d76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trailFxPoint: {fileID: 0}
+  trailPos: {fileID: 0}
   trailPrefab: {fileID: 0}
   particleTrailPrefab: {fileID: 19834120, guid: 79e5cbccf196da54580b4decbfdd495e,
     type: 2}
   explosionFXPrefab: {fileID: 19876098, guid: 3972534d344f3684697472572a92ed84, type: 2}
-  mixerGroup: {fileID: 0}
+  mixerGroup: {fileID: 243156251505640426, guid: 0857121b29d9ea849b91abff29ddee5f,
+    type: 2}
   fireClip: {fileID: 0}
   fireVolume: 1
   fireMinDistance: 25
@@ -369,7 +370,7 @@ MonoBehaviour:
   loopMinDistance: 25
   loopMaxDistance: 500
   trailAlwaysOn: 1
-  playExplosionOnSelfDestruct: 1
+  SelfDestruct: 1
 --- !u!136 &13605952
 CapsuleCollider:
   m_ObjectHideFlags: 1

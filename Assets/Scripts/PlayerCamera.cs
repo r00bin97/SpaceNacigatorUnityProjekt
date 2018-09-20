@@ -23,27 +23,6 @@ public class PlayerCamera : MonoBehaviour
     {       
         UpdateCamera();
 
-        /* // Free Camera Rotation --> 
-        if (Input.GetKey(KeyCode.P))
-        {
-            useMouseInput = false // anderer Skript
-            Cursor.lockState = CursorLockMode.Locked;  // Testen
-            Cursor.lockState = CursorLockMode.None;    // Testen
-            transform.RotateAround(target.position, transform.right, -Input.GetAxis("Mouse Y") * freeCamRotationSpeed);
-            transform.RotateAround(target.position, transform.up, -Input.GetAxis("Mouse X") * freeCamRotationSpeed);
-
-             if (Input.GetKey(KeyCode.Escape))
-                Screen.lockCursor = false;
-             else
-                Screen.lockCursor = true;
-
-        }
-        else
-        {
-            useMouseInput = true
-            UpdateCamera();
-        }
-        */
     }
 
     private void UpdateCamera()
@@ -53,8 +32,6 @@ public class PlayerCamera : MonoBehaviour
             transform.position = target.TransformPoint(startOffset);
             transform.rotation = Quaternion.Slerp(transform.rotation, target.rotation, rotateSpeed * Time.deltaTime);
         }
-       // float scroll = Input.GetAxis("Mouse ScrollWheel");
-       //  transform.position += this.transform.forward * scroll * zoomSpeed;
     }
 
 }

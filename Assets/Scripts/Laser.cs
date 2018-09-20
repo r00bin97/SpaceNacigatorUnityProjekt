@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// Verwaltung der Laser Waffen. Spieler sowie Gegner
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

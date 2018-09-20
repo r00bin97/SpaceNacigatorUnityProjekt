@@ -63,7 +63,6 @@ GameObject:
   - component: {fileID: 114652224950324070}
   - component: {fileID: 136871897375303130}
   - component: {fileID: 54347944935624462}
-  - component: {fileID: 114208072839048768}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy1
@@ -351,17 +350,6 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &114208072839048768
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1356620301585294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bddc3bf77a816d45981caa046b0a55a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114273517027010176
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -472,6 +460,8 @@ MonoBehaviour:
   blowUpEffect: {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9,
     type: 2}
   AmmoDrop: {fileID: 1732828067385288, guid: c0d0076604c485e4788ce3a4ef71b29a, type: 2}
+  mixerGroup: {fileID: 243156251505640426, guid: 0857121b29d9ea849b91abff29ddee5f,
+    type: 2}
   hitByLaserSound: {fileID: 8300000, guid: 0dec3cbe2a32a0549856404fedb7a20d, type: 3}
   explosionSound: {fileID: 8300000, guid: 76a6cb824075d5c4386a75a3198f02a3, type: 3}
 --- !u!114 &114669913064813634

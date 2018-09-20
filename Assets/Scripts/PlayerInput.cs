@@ -1,9 +1,15 @@
-﻿using UnityEngine;
+﻿// Verwaltet die Eingaben des Spielers bezüglich Waffensystem und TargetSystem. 
+
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class PlayerInput : MonoBehaviour
 {
+    public UnityEngine.Audio.AudioMixerGroup mixerGroup;
+    protected AudioSource laserSource;
+    protected AudioSource inputSource;
+
     [SerializeField] Laser[] laser;         // Array aller Laser
     public Transform target;                // Wird beim Abfeuern mit Zielsuche überreicht
     new Rigidbody rigidbody;                // Benötigt für Rocket velocity
@@ -46,6 +52,27 @@ public class PlayerInput : MonoBehaviour
 
         for (int i = 0; i < 2; i++)
             launchers[i] = new Queue<LauncherManager>();
+
+        if (laserSound != null)
+        {
+            laserSource = gameObject.AddComponent<AudioSource>();
+            laserSource.clip = laserSound;
+            laserSource.loop = false;
+            laserSource.volume = 0.7f;
+            laserSource.pitch = Random.Range(0.9f, 1.3f);
+            laserSource.outputAudioMixerGroup = mixerGroup ?? null;
+            laserSource.Stop();
+        }
+
+        if (switchWeapon != null)
+        {
+            inputSource = gameObject.AddComponent<AudioSource>();
+            inputSource.clip = switchWeapon;
+            inputSource.loop = false;
+            inputSource.volume = 0.1f;
+            inputSource.outputAudioMixerGroup = mixerGroup ?? null;
+            inputSource.Stop();
+        }
     }
 
     void Start()
@@ -127,18 +154,26 @@ public class PlayerInput : MonoBehaviour
         if (lockedOn)
         {
             // Stellt sicher, das Listenindex keinen ungültigen Wert annehmen kann.
-            if (lockedEnemy > nearByEnemies.Count - 1)
+            if (lockedEnemy > nearByEnemies.Count -1)
             {
-                EnemyGuiCleaner();             
-                lockedEnemy = 0;
-                targetX = nearByEnemies[lockedEnemy].transform;
+               // EnemyGuiCleaner();
+                if (nearByEnemies.Count >= 1)
+                {
+                    lockedEnemy = nearByEnemies.Count -1;
+                    targetX = nearByEnemies[nearByEnemies.Count-1].transform;
+                }
+                else
+                {           
+                    lockedEnemy = 0;
+                    targetX = nearByEnemies[lockedEnemy].transform;
+                }
             }
 
             if (nearByEnemies.Count != 0)
             {
                 if (nearByEnemies[lockedEnemy] == null)
                 {
-                    // setze Gegner zurück auf den Ersten und deaktiviere das System
+                    // Setze Gegner zurück auf den Ersten und deaktiviere das System
                     EnemyGuiCleaner();
                     lockedEnemy = 0;
                     lockedOn = false;
@@ -155,7 +190,9 @@ public class PlayerInput : MonoBehaviour
         // Laser abfeuern mit Leertaste oder Mausrad Klick
         if (Input.GetKeyDown(KeyCode.Space) && GameUI.inSpiel == false || Input.GetKeyDown(KeyCode.Mouse2) && GameUI.inSpiel == false)
         {
-            AudioSource.PlayClipAtPoint(laserSound, transform.position);
+            if (laserSource != null)   // Spiele Audio ab.
+                laserSource.Play();
+
             foreach (Laser l in laser)
             {
                 Vector3 pos = transform.position + (transform.forward * l.Distance);
@@ -166,7 +203,9 @@ public class PlayerInput : MonoBehaviour
         // Zwischen Launchern wechseln, mit linker Maus oder Alt.
         if (Input.GetButtonDown("Fire2") && GameUI.inSpiel == false)
         {
-            AudioSource.PlayClipAtPoint(switchWeapon, transform.position);
+            if (inputSource != null)   // Spiele Audio ab.
+                inputSource.Play();
+
             selectedLauncher++;
 
             if (selectedLauncher >= 2)

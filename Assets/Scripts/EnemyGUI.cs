@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿// GUI Element auf Gegner. Wird aktiv geschaltet, sofern ein Gegner ausgewählt ist.
+
+using UnityEngine;
 using System.Collections;
 
 public class EnemyGUI : MonoBehaviour

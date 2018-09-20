@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// Zuständig für die Verwaltung der Spieler Kameras. (3rd & 1st Person)
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// Verwaltung von Eingaben zur Spielerschiffbewegung, sowie Maussteuerung
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

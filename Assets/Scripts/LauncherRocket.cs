@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿// Rakete -> zielsuchend - Ist auf Raketenprefab anzubringen
+
+using UnityEngine;
 using System.Collections.Generic;
 
 public class LauncherRocket : LauncherManager

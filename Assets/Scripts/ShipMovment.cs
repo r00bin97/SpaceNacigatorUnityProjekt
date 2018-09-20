@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿// Verwaltung von Schiffbewegungen
+
+using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(ShipBehaviour))]

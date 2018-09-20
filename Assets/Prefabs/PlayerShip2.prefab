@@ -2599,7 +2599,8 @@ AudioSource:
   m_GameObject: {fileID: 1587318820003432}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243156251505640426, guid: 0857121b29d9ea849b91abff29ddee5f,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 9c6c5a8fb15e87f4abcd99ac1ebff743, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.52
@@ -2679,7 +2680,8 @@ AudioSource:
   m_GameObject: {fileID: 1558602053716010}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243156251505640426, guid: 0857121b29d9ea849b91abff29ddee5f,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: adee1be38b210ba4d893cb5d1a8d67e8, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -3717,7 +3719,8 @@ MonoBehaviour:
   launchPoints:
   - {fileID: 4325056305463886}
   - {fileID: 4903768616264270}
-  mixerGroup: {fileID: 0}
+  mixerGroup: {fileID: 243156251505640426, guid: 0857121b29d9ea849b91abff29ddee5f,
+    type: 2}
   fireClip: {fileID: 8300000, guid: fd52e41386b1b03499bdcf688cb660bf, type: 3}
   fireVolume: 1
   minDistance: 10
@@ -3787,7 +3790,8 @@ MonoBehaviour:
   raketenAnzahl: 6
   "verz\xF6gerung": 0.3
   launchPoints: []
-  mixerGroup: {fileID: 0}
+  mixerGroup: {fileID: 243156251505640426, guid: 0857121b29d9ea849b91abff29ddee5f,
+    type: 2}
   fireClip: {fileID: 0}
   fireVolume: 1
   minDistance: 30
@@ -3866,6 +3870,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0145ef13ea9734c3eb611d10d21ed2df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mixerGroup: {fileID: 243156251505640426, guid: 0857121b29d9ea849b91abff29ddee5f,
+    type: 2}
+  laserVolume: 1
   laser:
   - {fileID: 114942183074705154}
   - {fileID: 114468354642641366}
@@ -3913,6 +3920,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73f6b5beb37bfd1428b01f070e893a2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mixerGroup: {fileID: 243156251505640426, guid: 0857121b29d9ea849b91abff29ddee5f,
+    type: 2}
   lightOn: {fileID: 8300000, guid: 1a2a00806b54498439e2e82787803aa0, type: 3}
   lightOff: {fileID: 8300000, guid: 5787e58471dacd442b14fed106724881, type: 3}
   lightShaftScript: {fileID: 1236178963598074}
@@ -4046,6 +4055,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9851ff8e99144aa594466ba1f47d75f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mixerGroup: {fileID: 243156251505640426, guid: 0857121b29d9ea849b91abff29ddee5f,
+    type: 2}
   explosion: {fileID: 1000012560919920, guid: 85a8865d1bf4a63478038fae23776de8, type: 2}
   smoke: {fileID: 1000011396044746, guid: 96b2ec0239d11fa4b9792311efceb8ed, type: 2}
   rigidBody: {fileID: 0}
@@ -4123,6 +4134,8 @@ MonoBehaviour:
   curHealth: 0
   regenerationRate: 1
   regenerationAmount: 1
+  mixerGroup: {fileID: 243156251505640426, guid: 0857121b29d9ea849b91abff29ddee5f,
+    type: 2}
   clip: {fileID: 8300000, guid: efd319bfa7a430f4fb32cc4d381210b7, type: 3}
   alarmDamage: {fileID: 8300000, guid: 6c9737c6c565bb34bb7935daf53e3424, type: 3}
   takeDamage: {fileID: 8300000, guid: b26aaf55d8b9fcf4a9b2e55208976f69, type: 3}

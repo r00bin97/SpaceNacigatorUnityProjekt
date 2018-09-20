@@ -15,7 +15,7 @@ public class ThusterSoundFX : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        if (Input.GetKey(KeyCode.W) && GameUI.inSpiel == false)
+        if (Input.GetKey(KeyCode.W) && GameUI.inSpiel == false && GameUI.inMenu == false)
         {
             audioThruster.UnPause();
         }

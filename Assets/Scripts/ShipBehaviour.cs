@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// Zuständig für Physikalisches Schiffverhalten
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

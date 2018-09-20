@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// Verwaltung der Menüs und den damit verbundenen Aktionen
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,7 +18,8 @@ public class GameUI : MonoBehaviour {
 
     public Button shipSelectButton;
     public Button shipSelectButton2;
-    private bool newStart = false; 
+    public static bool inMenu = true;
+    public bool newStart = false; 
     public static bool playerDead = false;
     private bool spielerShiff2 = false;
 
@@ -61,16 +64,19 @@ public class GameUI : MonoBehaviour {
 
     void SelectShip1(){
         spielerShiff2 = false;
+        inMenu = false;
         Instantiate(playerPrefab, playerStartPosition.transform.position, playerStartPosition.transform.rotation);
     }
 
     void SelectShip2(){
         spielerShiff2 = true;
+        inMenu = false;
         Instantiate(playerPrefab2, playerStartPosition.transform.position, playerStartPosition.transform.rotation);
     }
 
 	void ShowMainMenu(){
         playerDead = true;
+        inMenu = true;
         Invoke ("DelayMainMenuDisplay", Asteroid.destructionDelay * 3); // Nach dem Tod dauert er zeit bis das Menu wieder kommt
     }
 
@@ -87,6 +93,7 @@ public class GameUI : MonoBehaviour {
     }
 
 	void ShowGameUI(){
+       // inMenu = false;
         menuImage.SetActive(false);
         mainMenu.SetActive (false);
 		gameUI.SetActive (true);

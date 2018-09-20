@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿// PickUp Klasse, hauptsächlich für die Zerstörung eines Pickiups zuständig, bei Spielerkontakt. 
+// Nur der Spieler darf mit Pickup interagieren.
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

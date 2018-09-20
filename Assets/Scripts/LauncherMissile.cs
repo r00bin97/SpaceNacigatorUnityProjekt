@@ -1,4 +1,4 @@
-﻿// Skript für Raketen selber
+﻿// Rakete -> Nicht zielsuchend. Ist auf Raketenprefab anzubringen
 
 using UnityEngine;
 using System.Collections;
@@ -167,7 +167,7 @@ public class LauncherMissile : MonoBehaviour
     {
         Destroy(gameObject);
 
-        if (missileSFX.playExplosionOnSelfDestruct)
+        if (missileSFX.SelfDestruct)
             missileSFX.Explode();
         else if (impact)
             missileSFX.Explode();

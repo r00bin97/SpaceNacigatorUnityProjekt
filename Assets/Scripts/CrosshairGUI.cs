@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿// Zeigt das Fadenkreuz an
 
-// Zeigt dynamisches Fadenkreuz an
+using UnityEngine;
+using UnityEngine.UI;
 
 public class CrosshairGUI : MonoBehaviour
 {

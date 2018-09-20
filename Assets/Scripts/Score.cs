@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// Score und Highscore
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;

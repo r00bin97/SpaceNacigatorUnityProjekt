@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿// Zusätzlicher Effekt beim fliegen
+
+using UnityEngine;
 
 public class WindTrail : MonoBehaviour
 {

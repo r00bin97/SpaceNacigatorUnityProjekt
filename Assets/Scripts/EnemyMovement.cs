@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// Hauptklasse der Gegner
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +18,8 @@ public class EnemyMovement : MonoBehaviour {
     [SerializeField] GameObject LaserHitEffect;
     [SerializeField] GameObject blowUpEffect;
     [SerializeField] GameObject AmmoDrop;
+
+    public UnityEngine.Audio.AudioMixerGroup mixerGroup;
     public AudioClip hitByLaserSound;
     public AudioClip explosionSound;
    

@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// Klasse für Asteroiden
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

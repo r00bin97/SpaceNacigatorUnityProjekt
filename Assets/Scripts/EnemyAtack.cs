@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// Verwaltung von Gegnerangriff auf Spieler
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,11 +30,8 @@ public class EnemyAtack : MonoBehaviour {
 
 		//in Schussreichweite
 		if(Mathf.Abs(angle) > 90 && Mathf.Abs(angle) < 270){
-			//Debug.DrawLine(transform.position, target.position, Color.green);
 			return true;
 		}
-
-		//Debug.DrawLine(transform.position, target.position, Color.yellow);
 
 		return false;
 	}
@@ -41,11 +40,8 @@ public class EnemyAtack : MonoBehaviour {
 		RaycastHit hit;
 
 		Vector3 direction = target.position - transform.position;
-		//Debug.DrawRay (laser.transform.position, direction, Color.red);
 
 		if(Physics.Raycast(laser.transform.position, direction, out hit, laser.Distance)){
-
-			// Spieler in Reichweite und Angreifbar
 			if (hit.transform.CompareTag ("Player")) {
 				Debug.DrawRay (laser.transform.position, direction, Color.green);
 				hitPosition = hit.transform.position;
@@ -57,7 +53,6 @@ public class EnemyAtack : MonoBehaviour {
 	}
 
 	void FireLaser(){
-//		Debug.Log ("Enemy hat getroffen");
 		laser.FireLaser (hitPosition, target);
 	}
 

@@ -16,6 +16,16 @@ ModelImporter:
     100016: Scheibe_5
     100018: Scheibe_6
     100020: //RootNode
+    100022: Single_asteroid_3_broken_Kugel_LOD3
+    100024: Single_asteroid_3_broken_pCube1_1_LOD3
+    100026: Single_asteroid_3_broken_pCube1_2_LOD3
+    100028: Single_asteroid_3_broken_pCube1_LOD3
+    100030: Single_asteroid_3_broken_Scheibe_1_LOD3
+    100032: Single_asteroid_3_broken_Scheibe_2_LOD3
+    100034: Single_asteroid_3_broken_Scheibe_3_LOD3
+    100036: Single_asteroid_3_broken_Scheibe_4_LOD2
+    100038: Single_asteroid_3_broken_Scheibe_5_LOD3
+    100040: Single_asteroid_3_broken_Scheibe_6_LOD3
     400000: Kugel
     400002: pCube1
     400004: pCube1_1
@@ -27,6 +37,16 @@ ModelImporter:
     400016: Scheibe_5
     400018: Scheibe_6
     400020: //RootNode
+    400022: Single_asteroid_3_broken_Kugel_LOD3
+    400024: Single_asteroid_3_broken_pCube1_1_LOD3
+    400026: Single_asteroid_3_broken_pCube1_2_LOD3
+    400028: Single_asteroid_3_broken_pCube1_LOD3
+    400030: Single_asteroid_3_broken_Scheibe_1_LOD3
+    400032: Single_asteroid_3_broken_Scheibe_2_LOD3
+    400034: Single_asteroid_3_broken_Scheibe_3_LOD3
+    400036: Single_asteroid_3_broken_Scheibe_4_LOD2
+    400038: Single_asteroid_3_broken_Scheibe_5_LOD3
+    400040: Single_asteroid_3_broken_Scheibe_6_LOD3
     2100000: MatInner
     2100002: MatOuter
     2300000: Kugel
@@ -39,6 +59,16 @@ ModelImporter:
     2300014: Scheibe_4
     2300016: Scheibe_5
     2300018: Scheibe_6
+    2300020: Single_asteroid_3_broken_Kugel_LOD3
+    2300022: Single_asteroid_3_broken_pCube1_1_LOD3
+    2300024: Single_asteroid_3_broken_pCube1_2_LOD3
+    2300026: Single_asteroid_3_broken_pCube1_LOD3
+    2300028: Single_asteroid_3_broken_Scheibe_1_LOD3
+    2300030: Single_asteroid_3_broken_Scheibe_2_LOD3
+    2300032: Single_asteroid_3_broken_Scheibe_3_LOD3
+    2300034: Single_asteroid_3_broken_Scheibe_4_LOD2
+    2300036: Single_asteroid_3_broken_Scheibe_5_LOD3
+    2300038: Single_asteroid_3_broken_Scheibe_6_LOD3
     3300000: Kugel
     3300002: pCube1
     3300004: pCube1_1
@@ -49,6 +79,16 @@ ModelImporter:
     3300014: Scheibe_4
     3300016: Scheibe_5
     3300018: Scheibe_6
+    3300020: Single_asteroid_3_broken_Kugel_LOD3
+    3300022: Single_asteroid_3_broken_pCube1_1_LOD3
+    3300024: Single_asteroid_3_broken_pCube1_2_LOD3
+    3300026: Single_asteroid_3_broken_pCube1_LOD3
+    3300028: Single_asteroid_3_broken_Scheibe_1_LOD3
+    3300030: Single_asteroid_3_broken_Scheibe_2_LOD3
+    3300032: Single_asteroid_3_broken_Scheibe_3_LOD3
+    3300034: Single_asteroid_3_broken_Scheibe_4_LOD2
+    3300036: Single_asteroid_3_broken_Scheibe_5_LOD3
+    3300038: Single_asteroid_3_broken_Scheibe_6_LOD3
     4300000: Kugel
     4300002: pCube1_2
     4300004: pCube1_1
@@ -59,6 +99,16 @@ ModelImporter:
     4300014: Scheibe_2
     4300016: Scheibe_3
     4300018: Scheibe_4
+    4300020: Single_asteroid_3_broken_Kugel_LOD3
+    4300022: Single_asteroid_3_broken_pCube1_LOD3
+    4300024: Single_asteroid_3_broken_pCube1_1_LOD3
+    4300026: Single_asteroid_3_broken_pCube1_2_LOD3
+    4300028: Single_asteroid_3_broken_Scheibe_1_LOD3
+    4300030: Single_asteroid_3_broken_Scheibe_2_LOD3
+    4300032: Single_asteroid_3_broken_Scheibe_3_LOD3
+    4300034: Single_asteroid_3_broken_Scheibe_4_LOD2
+    4300036: Single_asteroid_3_broken_Scheibe_5_LOD3
+    4300038: Single_asteroid_3_broken_Scheibe_6_LOD3
   externalObjects:
   - first:
       type: UnityEngine:Material

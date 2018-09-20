@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿// Particleffekte und Audio Effekte für Raketen
+
+using UnityEngine;
 
 [RequireComponent(typeof(LauncherMissile))]
 public class LauncherSFX : MonoBehaviour
 {
     new Transform transform;
-    public Transform trailFxPoint;
+    public Transform trailPos;
     public TrailRenderer trailPrefab;
     public ParticleSystem particleTrailPrefab;
     public ParticleSystem explosionFXPrefab;
@@ -28,7 +30,7 @@ public class LauncherSFX : MonoBehaviour
     LauncherRemoveFX effectCleaner;
 
     public bool trailAlwaysOn = true;
-    public bool playExplosionOnSelfDestruct = true;
+    public bool SelfDestruct = true;
     bool antriebAktiviert = false;
 
     private void Awake()
@@ -71,17 +73,17 @@ public class LauncherSFX : MonoBehaviour
         if (trailPrefab != null || particleTrailPrefab != null)    // Tue nichts, wenn keine Trail angegeben ist.
         {
             // Suche nach Referenzpunkten, um Trail zu spawnen. Nutze Objekt-Transformation, wenn keine Referenz vorhanden.
-            if (trailFxPoint == null)
+            if (trailPos == null)
             {
-                trailFxPoint = transform.Find("TrailFx");
+                trailPos = transform.Find("TrailFx");
 
-                if (trailFxPoint == null)
-                    trailFxPoint = transform;
+                if (trailPos == null)
+                    trailPos = transform;
             }
 
             if (trailPrefab != null)            // Initialisiere Trail
             {
-                trail = Instantiate(trailPrefab, trailFxPoint);
+                trail = Instantiate(trailPrefab, trailPos);
                 trail.transform.localPosition = Vector3.zero;
                 trail.transform.localEulerAngles = Vector3.zero;
                 trail.enabled = false;
@@ -89,7 +91,7 @@ public class LauncherSFX : MonoBehaviour
      
             if (particleTrailPrefab != null)     // Initialisiere ParticleSystem
             {
-                particleTrail = Instantiate(particleTrailPrefab, trailFxPoint);
+                particleTrail = Instantiate(particleTrailPrefab, trailPos);
                 particleTrail.transform.localPosition = Vector3.zero;
                 particleTrail.transform.localEulerAngles = Vector3.zero;
                 particleTrail.Stop();
@@ -120,12 +122,12 @@ public class LauncherSFX : MonoBehaviour
 
         // Trail "abschalten", wenn Antrieb deaktiviert wurde.
         if (!trailAlwaysOn && antriebAktiviert && !missile.AntriebAktiv)
-            DetachTrail();
+            StopTrail();
     }
 
     public void Explode()
     {
-        DetachTrail();
+        StopTrail();
 
         if (explosionFXPrefab != null)
         {
@@ -142,7 +144,7 @@ public class LauncherSFX : MonoBehaviour
         }
     }
 
-    private void DetachTrail()    // Trail & Partikel abschalten.
+    private void StopTrail()    // Trail & Partikel abschalten.
     {
         if (fireSource != null)
             fireSource.Stop();

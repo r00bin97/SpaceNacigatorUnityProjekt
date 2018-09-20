@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// Zuständig für das Spawnen von Gegnern nach zeitlichem Interval
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

@@ -1,10 +1,14 @@
-﻿using System.Collections;
+﻿// Verschiedene Effekte, Rauch und Funken bei Kollision, Explosion bei Zerstörung. Kann von Spielern wie Gegnern verwendet werden
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
 public class Explosion : MonoBehaviour {
-	[SerializeField] GameObject explosion;
+
+    public UnityEngine.Audio.AudioMixerGroup mixerGroup;
+    [SerializeField] GameObject explosion;
     [SerializeField] GameObject smoke;
     [SerializeField] Rigidbody rigidBody;
 	[SerializeField] float laserHitModifier = 100f;

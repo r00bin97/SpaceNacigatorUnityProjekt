@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// FollowCam, ursprüngliche Spieler Kamera, aufgrund von Erstellung eines ausgereifteren Setups verworfen. Wird noch als Menu Kamera genutzt.
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,7 +28,6 @@ public class FollowCam : MonoBehaviour {
 
 		//Kamera Variante 1
 		SmoothFollow ();
-
 
 		//Kamera Variante 2
 		//Kamera flogt das Target

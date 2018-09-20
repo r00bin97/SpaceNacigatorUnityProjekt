@@ -1,4 +1,5 @@
-﻿// Launcher Box. Liegt auf LauncherBox Objekt.
+﻿// Launcher Box. Liegt auf LauncherBox Objekt. (Pod)
+
 using UnityEngine;
 
 public class LauncherBox : LauncherManager
