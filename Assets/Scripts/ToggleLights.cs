@@ -45,7 +45,7 @@ public class ToggleLights : MonoBehaviour {
         lightShaftScript.GetComponent<LightShafts>().enabled = false;
     }
 	
-	// Update is called once per frame
+
 	void Update ()
     {
         if (Input.GetKeyDown(KeyCode.B) && lightON == false && GameUI.inSpiel == false)
@@ -56,7 +56,6 @@ public class ToggleLights : MonoBehaviour {
             if (onSource != null)   // Spiele Audio ab.
                 onSource.Play();
 
-            //AudioSource.PlayClipAtPoint(lightOn, transform.position);
             lightON = true;         // Licht einschalten
         }
         else if (Input.GetKeyDown(KeyCode.B) && GameUI.inSpiel == false)
@@ -67,7 +66,6 @@ public class ToggleLights : MonoBehaviour {
             if (offSource != null)   // Spiele Audio ab.
                 offSource.Play();
 
-            //AudioSource.PlayClipAtPoint(lightOff, transform.position);
             lightON = false;         // Licht ausschalten
         }
     }   

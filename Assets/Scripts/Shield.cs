@@ -6,10 +6,10 @@ using UnityEngine;
 
 public class Shield : MonoBehaviour {
 
-    [SerializeField] int maxHealth = 10;
-	[SerializeField] int curHealth;
-	[SerializeField] float regenerationRate = 2f;
-	[SerializeField] int regenerationAmount = 1;
+    [SerializeField] int maxHealth = 10;               // Maximale Lebensenergie 
+	[SerializeField] int curHealth;                    // Aktuelle Lebensenergie
+	[SerializeField] float regenerationRate = 2f;      // Regenerations Rate
+	[SerializeField] int regenerationAmount = 1;       // Menge der regenerierten Energie pro Sekunde 
 
     public UnityEngine.Audio.AudioMixerGroup mixerGroup;
     static int points = 100;
@@ -29,7 +29,7 @@ public class Shield : MonoBehaviour {
     }
 
     void Start(){
-		curHealth = maxHealth;
+		curHealth = maxHealth;  // Setze Lebensenergie auf Maximum bei Spielstart.                                         
         InvokeRepeating ("Regenerate", regenerationRate, regenerationRate);
 	}
 
@@ -82,6 +82,7 @@ public class Shield : MonoBehaviour {
 			
 	}
 
+    // Einsammlung von Pickups 
     void OnTriggerEnter(Collider colide)
     {
         if (colide.tag == "Pickup")

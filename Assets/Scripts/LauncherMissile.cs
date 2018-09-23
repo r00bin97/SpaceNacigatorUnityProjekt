@@ -1,4 +1,5 @@
-﻿// Rakete -> Nicht zielsuchend. Ist auf Raketenprefab anzubringen
+﻿// Rakete -> Zielsuchend. Ist auf Raketenprefab anzubringen
+// Zielsuche abschalten, mit suchKegel und suchReichweite = 0 im Editor.
 
 using UnityEngine;
 using System.Collections;

@@ -9,12 +9,12 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour {
 
-	[SerializeField] float minScale = .8f;
-	[SerializeField] float maxScale = 1.2f;
-	[SerializeField] float rotationOffset = 100f;
-    public GameObject destroyedVersion;
+	[SerializeField] float minScale = .8f;              // Minimale Größe
+	[SerializeField] float maxScale = 1.2f;             // Maximale Größe
+    [SerializeField] float rotationOffset = 100f;       // Rotation Offset
+    public GameObject destroyedVersion;                 // Asteroid Debris Model
 
-    public static float destructionDelay = 1.0f;
+    public static float destructionDelay = 1.0f;        // Zeit die vergeht, bis Object bei Spielende zerstört wird. (In Sekunden)
 
 	Transform myT;
 	Vector3 randomRotation;
@@ -25,18 +25,18 @@ public class Asteroid : MonoBehaviour {
 
 	void Start(){
 		Vector3 scale = Vector3.one;
-		scale.x = Random.Range (minScale, maxScale);
+		scale.x = Random.Range (minScale, maxScale);  
 		scale.y = Random.Range (minScale, maxScale);
 		scale.z = Random.Range (minScale, maxScale);
-		myT.localScale = scale;
+		myT.localScale = scale; // Erzeugt Asteriod und skalliert Object auf den X-Y-Z-Achsen innerhalb des gültigen Bereichs
 
-		randomRotation.x = Random.Range (-rotationOffset, rotationOffset);
+        randomRotation.x = Random.Range (-rotationOffset, rotationOffset);      // Zufälltige Rotation festlegen
 		randomRotation.y = Random.Range (-rotationOffset, rotationOffset);
 		randomRotation.z = Random.Range (-rotationOffset, rotationOffset);
 	}
 
 	void Update(){
-		myT.Rotate (randomRotation * Time.deltaTime);
+		myT.Rotate (randomRotation * Time.deltaTime);  // Update jeden Frame
 	}
 
     void HitByRay()

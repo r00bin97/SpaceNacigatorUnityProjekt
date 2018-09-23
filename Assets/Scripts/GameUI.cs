@@ -12,7 +12,9 @@ public class GameUI : MonoBehaviour {
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject gameHud;
     [SerializeField] GameObject gameUI;
-	[SerializeField] GameObject playerPrefab;
+    [SerializeField] GameObject fuelSlider;
+    [SerializeField] GameObject gameOverScreen;
+    [SerializeField] GameObject playerPrefab;
     [SerializeField] GameObject playerPrefab2;
     [SerializeField] GameObject playerStartPosition;
 
@@ -77,7 +79,10 @@ public class GameUI : MonoBehaviour {
 	void ShowMainMenu(){
         playerDead = true;
         inMenu = true;
-        Invoke ("DelayMainMenuDisplay", Asteroid.destructionDelay * 3); // Nach dem Tod dauert er zeit bis das Menu wieder kommt
+        gameHud.SetActive(false);
+        gameOverScreen.SetActive(true);
+        Invoke ("DelayMainMenuDisplay", Asteroid.destructionDelay * 3); 
+        // Warte 3 Sekunden bis die Animation zu Ende ist, zeige danach das MainMenu an
     }
 
     void MainMenu()
@@ -89,6 +94,8 @@ public class GameUI : MonoBehaviour {
         mainMenu.SetActive (true);
 		gameUI.SetActive (false);
         gameHud.SetActive(false);
+        fuelSlider.SetActive(false);
+        gameOverScreen.SetActive(false);
         Cursor.visible = true;
     }
 
@@ -98,6 +105,8 @@ public class GameUI : MonoBehaviour {
         mainMenu.SetActive (false);
 		gameUI.SetActive (true);
         gameHud.SetActive(true);
+        fuelSlider.SetActive(true);
+        gameOverScreen.SetActive(false);
         Cursor.visible = false;
         playerDead = false;
     }

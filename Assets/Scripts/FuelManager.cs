@@ -7,9 +7,9 @@ using UnityEngine.UI;
 
 public class FuelManager : MonoBehaviour {
 
-    public float startFuel; // Tankfüllung Spielanfang
-    public float maxFuel = 1000f;
-    public float tankVerbrauch;
+    public float startFuel;         // Tankfüllung Spielanfang
+    public float maxFuel = 1000f;   // Maximale Tankfüllung
+    public float tankVerbrauch;     // Bestimmt wieviel Energie verbraucht wird
     private Slider tankSlider;
     private Text tankTxt;
 

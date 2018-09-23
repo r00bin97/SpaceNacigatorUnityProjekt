@@ -26,7 +26,6 @@ public class PlayerInput : MonoBehaviour
     public Transform targetCleaner;         // Hilfsvariable zur Abschaltung aller Gegner UI Elemente
     EnemyMovement target2;                  // Um Gegner zu holen
     bool lockedOn;                          // TagetSystem ein & ausschalten
-    bool gegnerInScene;                     // true, wenn Gegner in Scene sind
     int lockedEnemy;                        // Gegner, welcher als Target ausgewehlt ist (Index für Liste)
 
     // Liste aller Gegner
@@ -77,7 +76,6 @@ public class PlayerInput : MonoBehaviour
 
     void Start()
     {
-        gegnerInScene = false;
         lockedOn = false;
         lockedEnemy = 0;
 
@@ -115,10 +113,11 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
-        LookForTarget();
+        //LookForTarget();
 
-        if (gegnerInScene == true)
+        if (nearByEnemies.Count > 0)
         {
+            Debug.Log("Target System ON");
             // Sobald ein Gegner in der Scene ist, wird das Target System aktiv.
             if (!lockedOn)
             {               
@@ -179,9 +178,9 @@ public class PlayerInput : MonoBehaviour
                     lockedOn = false;
                 }
 
-                EnemyGuiCleaner(); // Entfernt vorheriges Target GUI
-                targetX = nearByEnemies[lockedEnemy].transform; // Target Transform für eigentliches Tracking
-                targetX.Find("TargetGui").GetComponent<Renderer>().enabled = true; // Aktiviert Target GUI für den ausgewählten Gegner
+                EnemyGuiCleaner();                                                  // Entfernt vorheriges Target GUI
+                targetX = nearByEnemies[lockedEnemy].transform;                     // Target Transform für eigentliches Tracking
+                targetX.Find("TargetGui").GetComponent<Renderer>().enabled = true;  // Aktiviert Target GUI für den ausgewählten Gegner
                 Debug.Log("Selected Target= " + targetX);
             }
         }
@@ -203,33 +202,33 @@ public class PlayerInput : MonoBehaviour
         // Zwischen Launchern wechseln, mit linker Maus oder Alt.
         if (Input.GetButtonDown("Fire2") && GameUI.inSpiel == false)
         {
-            if (inputSource != null)   // Spiele Audio ab.
+            if (inputSource != null)    // Spiele Audio ab.
                 inputSource.Play();
 
-            selectedLauncher++;
+            selectedLauncher++;        // Launcher wechseln
 
-            if (selectedLauncher >= 2)
+            if (selectedLauncher >= 2) // Damit nur zwischen den vorhandenen Launchern gewechselt werden kann
                 selectedLauncher = 0;
         }
 
         // Ausgewählten Launcher abfeuern
-        if (selectedLauncher == 1 && target != null && !target.Equals(null))
+        if (selectedLauncher == 1 && nearByEnemies.Count > 0) // Wenn Potenzielles Target in Scene nutze FireWeapon
         {
             if (Input.GetButton("Fire1") && GameUI.inSpiel == false)
                 FireWeapon();
         }
-        else if (selectedLauncher == 0 && target != null && !target.Equals(null))
+        else if (selectedLauncher == 0 && nearByEnemies.Count > 0)
         {
             if (Input.GetButtonDown("Fire1") && GameUI.inSpiel == false)
                 FireWeapon();
         }
 
-        if (selectedLauncher == 1 && target.Equals(null))
+        if (selectedLauncher == 1 && nearByEnemies.Count == 0)    // Wenn kein Target in Scene nutze FireWeaponTemp
         {
             if (Input.GetButton("Fire1") && GameUI.inSpiel == false)
                 FireWeaponTemp();
         }
-        else if (selectedLauncher == 0 && target.Equals(null))
+        else if (selectedLauncher == 0 && nearByEnemies.Count == 0)
         {
             if (Input.GetButtonDown("Fire1") && GameUI.inSpiel == false)
                 FireWeaponTemp();
@@ -237,14 +236,6 @@ public class PlayerInput : MonoBehaviour
         UpdateAmmoCounters();
     }
 
-    // Überprüft, ob sich Gegner in der Scene befinden.
-    void LookForTarget()
-    {
-        if (GameObject.FindWithTag("Enemy1") != null)
-            gegnerInScene = true;
-        else
-            gegnerInScene = false;
-    }
 
     // Wird benötigt um alle vorherig aktivierten "TargetGUI Elemente" abzuschalten.
     private void EnemyGuiCleaner()
@@ -261,10 +252,10 @@ public class PlayerInput : MonoBehaviour
     {
         if (launchers[selectedLauncher].Count > 0)
         {
-            target = targetX; // Bei Abschuss wird das Ziel an Laucher übergeben
-            LauncherManager temp = launchers[selectedLauncher].Dequeue(); // Von Warteschlange abmelden
-            temp.Launch(target, rigidbody.velocity); // Abschuss findet statt
-            launchers[selectedLauncher].Enqueue(temp);// Von Warteschlange anmelden
+            target = targetX;                                               // Bei Abschuss wird das Ziel an Laucher übergeben
+            LauncherManager temp = launchers[selectedLauncher].Dequeue();   // Von Warteschlange abmelden
+            temp.Launch(target, rigidbody.velocity);                        // Abschuss findet statt
+            launchers[selectedLauncher].Enqueue(temp);                      // Von Warteschlange anmelden
         }
     }
 
@@ -282,9 +273,9 @@ public class PlayerInput : MonoBehaviour
     // Munitionsanzeige updaten 
     private void UpdateAmmoCounters()
     {
-        int raketenAnzahl = 0; // Zielsuchend
-        int rocketCount = 0; // Nicht Zielsuchend
-        int rocketMagazine = 0; // Magazine für nicht Zielsuchende
+        int raketenAnzahl = 0;              // Zielsuchend
+        int rocketCount = 0;                // Nicht Zielsuchend
+        int rocketMagazine = 0;             // Magazine für nicht Zielsuchende
 
         foreach (LauncherManager launcher in allLaunchers)
         {
@@ -298,7 +289,7 @@ public class PlayerInput : MonoBehaviour
             }
         }
 
-        // Bildschirmausgabe GUI 
+        // Bildschirmausgabe 
         if (selectedLauncher == 0)
         {
             SelectedLauncher.text = "Tracking Missile:  " + raketenAnzahl.ToString("0") + "\n";

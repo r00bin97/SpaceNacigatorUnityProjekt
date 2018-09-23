@@ -6,14 +6,13 @@ using UnityEngine;
 
 public class ShipBehaviour : MonoBehaviour
 {
-    public Vector3 lineareKraft = new Vector3(100.0f, 100.0f, 100.0f);
-    public Vector3 diagonaleKraft = new Vector3(100.0f, 100.0f, 100.0f);
-    //public float gegenkraft = 1.0f;      // 0.0f - 1.0f
-    public float kraftverstaerker = 100.0f;
-    public Rigidbody Rigidbody { get { return rbody; } }
-    private Vector3 kraftLinear = Vector3.zero;
-    private Vector3 kraftDiagonal = Vector3.zero;
-    private ShipMovment ship;
+    public Vector3 lineareKraft = new Vector3(100.0f, 100.0f, 100.0f);      // Instanziiert Vec3 für lineare Force
+    public Vector3 diagonaleKraft = new Vector3(100.0f, 100.0f, 100.0f);    // Instanziiert Vec3 für diagonale Force
+    public float kraftverstaerker = 100.0f;                                 // Verstärkt Kraft
+    public Rigidbody Rigidbody { get { return rbody; } }                    // Get Rigid Body
+    private Vector3 kraftLinear = Vector3.zero;                             // Vector mit (0,0,0) Values
+    private Vector3 kraftDiagonal = Vector3.zero;                           // Vector mit (0,0,0) Values
+    private ShipMovment ship;                                               // Get Playership
     private Rigidbody rbody;
 
     void Awake()
@@ -24,7 +23,7 @@ public class ShipBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Kraft & Drehmoment
+        // Kraft & Drehmoment bestimmen
         if (rbody != null)
         {
             rbody.AddRelativeForce(kraftLinear * kraftverstaerker, ForceMode.Force); 

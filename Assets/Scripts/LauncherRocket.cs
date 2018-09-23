@@ -79,7 +79,8 @@ public class LauncherRocket : LauncherManager
         stations.Clear();
         spawnedMissiles = 0;
 
-        foreach (Transform point in launchPoints){
+        foreach (Transform point in launchPoints)
+        {
             RaketenSystem newStation = new RaketenSystem(verzögerung, rocketPrefab, point, spielerSchiff);
             stations.Enqueue(newStation);
             spawnedMissiles++;

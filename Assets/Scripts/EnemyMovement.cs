@@ -10,11 +10,12 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour {
 
-	[SerializeField] Transform target;
-	[SerializeField] float rotationlDamp = 0.5f;
-	[SerializeField] float movementSpeed = 10f;
-	[SerializeField] float rayCastOffset = 2.5f;
-	[SerializeField] float detectionDistance = 20f;
+	[SerializeField] Transform target;                  // Target Transform (Spielerschiff)
+	[SerializeField] float rotationlDamp = 0.5f;        // Rotationszeit
+	[SerializeField] float movementSpeed = 10f;         // Geschwindigkeit
+	[SerializeField] float rayCastOffset = 2.5f;        // Wartezeit nach Schießen
+	[SerializeField] float detectionDistance = 20f;     // Reichweite des Gegnerwaffen
+    private int life = 600;                             // Lebensenergie eines Gegners
     [SerializeField] GameObject LaserHitEffect;
     [SerializeField] GameObject blowUpEffect;
     [SerializeField] GameObject AmmoDrop;
@@ -23,8 +24,8 @@ public class EnemyMovement : MonoBehaviour {
     public AudioClip hitByLaserSound;
     public AudioClip explosionSound;
    
-    bool addOnlyOnce; // Damit Gegner nur einmal in die Liste kommt
-    bool inScene; // Um sicher zu sein, dass Gegner auch in Scene ist
+    bool addOnlyOnce;   // Damit Gegner nur einmal in die Liste kommt
+    bool inScene;       // Um sicher zu sein, dass Gegner auch in Scene ist
 
     void OnEnable(){
 		EventManager.onPlayerDeath += FindMainCamera;
@@ -48,14 +49,17 @@ public class EnemyMovement : MonoBehaviour {
         Destroy (gameObject); 
 	}
 
-    private int life = 600;
-    void OnCollisionEnter(Collision health)
+    void OnCollisionEnter(Collision health)     // Wenn ein Gegner von einer Rakete getroffen wird, geht seine Lebensenergie auf 0
     {
         if (health.gameObject.tag == "launcher")
-            life -= 600;                  
+        {
+            life -= 600;
+            GameObject laserSFX = Instantiate(LaserHitEffect, transform.position, Quaternion.identity) as GameObject;
+            Destroy(laserSFX, 2f);
+        }
     }
 
-    void HitByRay()
+    void HitByRay()     // Wenn ein Gegner von einer Laser getroffen wird, wird 150 Lebensenergie abgezogen. 
     {
         life -= 150;
         GameObject laserSFX = Instantiate(LaserHitEffect, transform.position, Quaternion.identity) as GameObject;
@@ -67,13 +71,13 @@ public class EnemyMovement : MonoBehaviour {
     //Gegner töten
     void Kill()
     {
-        PlayerInput.nearByEnemies.Remove(this); // Entferne Gegner von Liste
         GameObject explosionSFX = Instantiate(blowUpEffect, transform.position, Quaternion.identity) as GameObject; // Particeleffekt getriggert
-        randomDrop(); // Randomizer aufrufen
-        AudioSource.PlayClipAtPoint(explosionSound, transform.position); // Spiele Audio ab
-        Destroy(explosionSFX, 2f); // Entferne Explosion, nach 2 Sekunden
-        EventManager.ScorePoints(200); // Spieler erhält 200 Punkte
-        Destroy(gameObject);
+        PlayerInput.nearByEnemies.Remove(this);                             // Entferne Gegner von Liste   
+        randomDrop();                                                       // Randomizer aufrufen
+        AudioSource.PlayClipAtPoint(explosionSound, transform.position);    // Spiele Audio ab
+        Destroy(explosionSFX, 2f);                                          // Entferne Explosion, nach 2 Sekunden
+        EventManager.ScorePoints(200);                                      // Spieler erhält 200 Punkte
+        Destroy(gameObject);                                                // Objekt entfernen
     }
 
     // Randomizer, denn nicht jeder Gegner soll Ammo fallen lassen
@@ -99,16 +103,16 @@ public class EnemyMovement : MonoBehaviour {
             PlayerInput.nearByEnemies.Add(this);
         }
 
-        if (life <= 0){
+        if (life <= 0){     // Wenn die Lebensenergie 0 ist führe "Kill" funktion aus.
             Kill();
         }
 
-        if (!FindTarget ()) {
+        if (!FindTarget ()) {   //Tue nichts, wenn kein Spielerschiff in Scene ist 
 			return;
 		}
 
-		Pathfinding ();
-		Turn ();
+		Pathfinding ();  
+        Turn ();
 		Move ();
 	}
 

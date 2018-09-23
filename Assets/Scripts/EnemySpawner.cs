@@ -7,7 +7,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour {
 	[SerializeField] GameObject enemyPrefab;
 	[SerializeField] float spawnTimer = 5f;
-
+    bool spawnStop = false;
 
 	void Start(){
 		//StartSpawning ();
@@ -24,7 +24,22 @@ public class EnemySpawner : MonoBehaviour {
 		//EventManager.onPlayerDeath -= StopSpawning;
 	}
 
-	void SpawnEnemy(){
+    private void Update()
+    {
+        // Maximal 10 Gegener im Level (Aus Performancegründen dürfen nicht 'unendlich' viele Gegner spawnen über Zeit.
+        if(PlayerInput.nearByEnemies.Count >= 10)
+        {
+            StopSpawning();
+            spawnStop = true;
+        }
+        if (spawnStop && PlayerInput.nearByEnemies.Count <= 10)
+        {
+            StartSpawning();
+            spawnStop = false;
+        }
+    }
+
+    void SpawnEnemy(){
 		Instantiate (enemyPrefab, transform.position, Quaternion.identity);
 	}
 
