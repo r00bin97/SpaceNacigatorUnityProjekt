@@ -51,7 +51,7 @@ public class FuelManager : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Pickup"))
+        if (other.CompareTag("Pickup") || other.CompareTag("Handplaced"))
         {
             startFuel += 200f;
             if(startFuel >= maxFuel)
